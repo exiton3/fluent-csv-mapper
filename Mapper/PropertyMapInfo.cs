@@ -25,7 +25,20 @@ namespace Mapper
         }
 
         public IValueFormatter ValueFormatter { get; set; }
+
+        public bool IsValueFormatterSetted
+        {
+            get { return ValueFormatter != null; }
+        }
+
+        public bool IsReferenceProperty
+        {
+            get {return ReferenceType != null; }
+        }
+
         public Type ClassMapping { get; set; }
+
+        public Type ReferenceType {get; set; }
     }
     
 }
