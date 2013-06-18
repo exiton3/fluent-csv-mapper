@@ -16,17 +16,17 @@ namespace Mapper.Tests
 
         #endregion
 
-        private static TestFactory _mapFactory;
+        private static TestRegistrationContainer _mapRegistrationContainer;
 
         private static ClassMapper CreateTranslator()
         {
-            if (_mapFactory == null)
+            if (_mapRegistrationContainer == null)
             {
-                _mapFactory = new TestFactory();
+                _mapRegistrationContainer = new TestRegistrationContainer();
                 Console.WriteLine("Factory created");
             }
 
-            return new ClassMapper(_mapFactory);
+            return new ClassMapper(_mapRegistrationContainer);
         }
 
         [Test]

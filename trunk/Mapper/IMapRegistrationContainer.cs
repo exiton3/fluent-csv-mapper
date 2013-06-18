@@ -2,7 +2,7 @@ using System;
 
 namespace Mapper
 {
-    public interface IMapFactory
+    public interface IMapRegistrationContainer
     {
         IMapConfiguration GetMapperFor(Type type);
     }
