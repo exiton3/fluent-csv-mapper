@@ -31,6 +31,13 @@ namespace Mapper
             return _propertyMapOptions;
         }
 
+        protected void MapAsReference<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
+        {
+            var propInfo = CreatePropertyMapInfo(getterExpression);
+            propInfo.ReferenceType = typeof (TValue);
+            _mappings.Add(name, propInfo);
+        }
+
        
         private PropertyMapInfo<T> CreatePropertyMapInfo<TValue>(Expression<Func<T, TValue>> getterExpression)
         {

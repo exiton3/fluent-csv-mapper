@@ -22,12 +22,18 @@ namespace Mapper
             foreach (var propInfo in classMap.Mappings)
             {
                 var getterValue = propInfo.Value.Getter(memento);
-
-                if (propInfo.Value.ValueFormatter != null)
+                if (propInfo.Value.IsReferenceProperty)
                 {
-                    getterValue = propInfo.Value.ValueFormatter.Format(getterValue);
+                    dynamicVariantType[propInfo.Key] = Store(getterValue);
                 }
-                dynamicVariantType[propInfo.Key] = getterValue;
+                else
+                {
+                    if (propInfo.Value.IsValueFormatterSetted)
+                    {
+                        getterValue = propInfo.Value.ValueFormatter.Format(getterValue);
+                    }
+                    dynamicVariantType[propInfo.Key] = getterValue;
+                }
             }
 
             return dynamicVariantType;
@@ -41,15 +47,22 @@ namespace Mapper
             {
                 var mapping = classMap.GetMapping(data.Key);
                 var value = data.Value;
-
-                if (mapping.ValueFormatter != null)
+                if (mapping.IsReferenceProperty)
                 {
-                    value = mapping.ValueFormatter.Parse((string)data.Value);
+                   var subObj = Restore(mapping.ReferenceType, value as DynamicVariantType);
+                    mapping.Setter(restoredObject, subObj);
                 }
-                mapping.Setter(restoredObject, value);
+                else
+                {
+                    if (mapping.IsValueFormatterSetted)
+                    {
+                        value = mapping.ValueFormatter.Parse((string) data.Value);
+                    }
+                    mapping.Setter(restoredObject, value);
+                }
             }
 
-            return restoredObject ;
+            return restoredObject;
         }
 
         #endregion

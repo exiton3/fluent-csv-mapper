@@ -8,7 +8,7 @@ namespace Mapper.Tests
             Map(x => x.Age, "Age");
             Map(x => x.DoB, "DoB").UseFormatter<DateTimeFormatter>();
             Map(x => x.Numbers, "Phones");
-            Map(x => x.Address, "Address").UseMapping<AddressMap>();
+            MapAsReference(x => x.Address, "Address");
         }
 
        

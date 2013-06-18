@@ -54,7 +54,7 @@ namespace Mapper.Tests
         {
             var dateTime = DateTime.Now;
             var numbers = new List<int> {1, 2, 3, 4, 5};
-            var person = new Person {Age = 28, Name = "John", DoB = dateTime,Numbers = numbers};
+            var person = new Person {Age = 28, Name = "John", DoB = dateTime,Numbers = numbers, Address = new Address()};
 
 
             var translator = CreateTranslator();
@@ -70,7 +70,7 @@ namespace Mapper.Tests
         public void StorePropertyInDifferentTypeInDynamicVariantTypeAccordingToMapping()
         {
             var dateTime = DateTime.Now;
-            var person = new Person { Age = 28, Name = "John", DoB = dateTime};
+            var person = new Person { Age = 28, Name = "John", DoB = dateTime, Address = new Address()};
 
 
             var translator = CreateTranslator();
@@ -79,6 +79,57 @@ namespace Mapper.Tests
 
             Assert.That(dvt.Data["DoB"], Is.EqualTo(dateTime.ToShortDateString()));
         }
+
+        [Test]
+        public void StoreReferenceProperty()
+        {
+            var dateTime = DateTime.Now;
+            var address = new Address {Street = "some", Number = 123};
+            var person = new Person
+                             {
+                                 Age = 28,
+                                 Name = "John",
+                                 DoB = dateTime,
+                                 Address = address
+                             };
+
+
+            var translator = CreateTranslator();
+
+            var dvt = translator.Store(person);
+
+            var addressDynamic = dvt.Data["Address"] as DynamicVariantType;
+            Assert.That(addressDynamic,Is.Not.Null);
+            Assert.That(addressDynamic["Street"], Is.EqualTo("some"));
+            Assert.That(addressDynamic["House"], Is.EqualTo(123));
+        }
+
+        [Test]
+        public void RestoreReferenceProperty()
+        {
+
+            var dynamicVariantType = new DynamicVariantType();
+            dynamicVariantType["Name"] = "Sergey";
+            dynamicVariantType["Age"] = 28;
+            var dateTime = DateTime.Now;
+            dynamicVariantType["DoB"] = dateTime.ToShortDateString();
+            var addressDynamic = new DynamicVariantType();
+            addressDynamic["Street"] = "some";
+            addressDynamic["House"] = 123;
+
+            dynamicVariantType["Address"] = addressDynamic;
+
+            var translator = CreateTranslator();
+            var restoredObject = translator.Restore(typeof (Person), dynamicVariantType);
+
+            Assert.That(restoredObject, Is.InstanceOf<Person>());
+
+            var person = restoredObject as Person;
+
+            Assert.That(person.Address.Number, Is.EqualTo(123));
+            Assert.That(person.Address.Street, Is.EqualTo("some"));
+        }
+        
 
         
     }
