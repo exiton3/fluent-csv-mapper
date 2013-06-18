@@ -36,8 +36,6 @@ namespace Mapper
             get {return ReferenceType != null; }
         }
 
-        public Type ClassMapping { get; set; }
-
         public Type ReferenceType {get; set; }
     }
     

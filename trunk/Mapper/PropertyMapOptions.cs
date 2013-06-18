@@ -13,11 +13,6 @@ namespace Mapper
         {
             _propertyMapInfo.ValueFormatter = new TFormatter();
         }
-
-        public void UseMapping<TClassMap>() where TClassMap : IMapConfiguration
-        {
-            _propertyMapInfo.ClassMapping = typeof (TClassMap);
-        }
     }
 
 }
