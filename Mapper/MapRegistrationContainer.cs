@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Mapper
 {
-    public class MapFactory : IMapFactory
+    public class MapRegistrationContainer : IMapRegistrationContainer
     {
         private readonly Dictionary<Type, IMapConfiguration> _mappings = new Dictionary<Type, IMapConfiguration>();
 
@@ -17,7 +17,7 @@ namespace Mapper
             throw new InvalidOperationException(string.Format("Mapping class {0} was not found", type.Name));
         }
 
-        protected void Add<TClass,TClassMap>() where TClass:class where TClassMap:IMapConfiguration, new()
+        protected void Register<TClass,TClassMap>() where TClass:class where TClassMap:IMapConfiguration, new()
         {
             _mappings.Add(typeof (TClass), new TClassMap());
         }

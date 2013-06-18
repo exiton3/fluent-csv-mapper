@@ -43,11 +43,11 @@
     <Compile Include="DynamicVariantType.cs" />
     <Compile Include="IFluentSyntax.cs" />
     <Compile Include="IMapConfiguration.cs" />
-    <Compile Include="IMapFactory.cs" />
+    <Compile Include="IMapRegistrationContainer.cs" />
     <Compile Include="IClassMapper.cs" />
     <Compile Include="IPropertyMapInfo.cs" />
     <Compile Include="IPropertyMapOptions.cs" />
-    <Compile Include="MapFactory.cs" />
+    <Compile Include="MapRegistrationContainer.cs" />
     <Compile Include="PropertyMapOptions.cs" />
     <Compile Include="IValueFormatter.cs" />
     <Compile Include="ClassMap.cs" />

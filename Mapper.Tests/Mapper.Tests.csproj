@@ -46,7 +46,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="AddressMap.cs" />
     <Compile Include="DateTimeFormatter.cs" />
-    <Compile Include="TestFactory.cs" />
+    <Compile Include="TestRegistrationContainer.cs" />
     <Compile Include="ClassMapperTests.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonMap.cs" />
