@@ -5,18 +5,18 @@ namespace Mapper
     public class ClassMapper: IClassMapper
       
     {
-        private readonly IMapRegistrationContainer _mapRegistrationContainer;
+        private readonly IMapContainer _mapContainer;
 
-        public ClassMapper(IMapRegistrationContainer mapRegistrationContainer)
+        public ClassMapper(IMapContainer mapContainer)
         {
-            _mapRegistrationContainer = mapRegistrationContainer;
+            _mapContainer = mapContainer;
         }
 
         #region IClassMapper Members
 
         public DynamicVariantType Store(object memento)
         {
-            var classMap = _mapRegistrationContainer.GetMapperFor(memento.GetType());
+            var classMap = _mapContainer.GetMapperFor(memento.GetType());
             var dynamicVariantType = new DynamicVariantType();
 
             foreach (var propInfo in classMap.Mappings)
@@ -41,7 +41,7 @@ namespace Mapper
 
         public object Restore(Type type, DynamicVariantType storage)
         {
-            var classMap = _mapRegistrationContainer.GetMapperFor(type);
+            var classMap = _mapContainer.GetMapperFor(type);
             var restoredObject = classMap.Instance;
             foreach (var data in storage.Data)
             {

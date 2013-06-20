@@ -1,8 +1,8 @@
 namespace Mapper.Tests
 {
-    internal class TestRegistrationContainer : MapRegistrationContainer
+    internal class TestContainer : MapContainer
     {
-        public TestRegistrationContainer()
+        public TestContainer()
         {
             Register<Person, PersonMap>();
             Register<Address, AddressMap>();
