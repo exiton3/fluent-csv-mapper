@@ -43,13 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address.cs" />
-    <Compile Include="AddressMap.cs" />
-    <Compile Include="DateTimeFormatter.cs" />
-    <Compile Include="TestContainer.cs" />
+    <Compile Include="ConcreteClasses\Address.cs" />
+    <Compile Include="ConcreteClasses\AddressMap.cs" />
+    <Compile Include="ConcreteClasses\DateTimeFormatter.cs" />
+    <Compile Include="ConcreteClasses\Department.cs" />
+    <Compile Include="ConcreteClasses\DepartmentModule.cs" />
+    <Compile Include="ConcreteClasses\ObjectStorage.cs" />
+    <Compile Include="ConcreteClasses\ObjectStorageFactory.cs" />
+    <Compile Include="ConcreteClasses\TestMapContainer.cs" />
+    <Compile Include="ConcreteClasses\TestMapModule.cs" />
     <Compile Include="ClassMapperTests.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="PersonMap.cs" />
+    <Compile Include="ConcreteClasses\Person.cs" />
+    <Compile Include="ConcreteClasses\PersonMap.cs" />
+    <Compile Include="MapContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

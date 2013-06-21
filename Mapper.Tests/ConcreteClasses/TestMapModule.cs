@@ -1,8 +1,8 @@
-namespace Mapper.Tests
+namespace Mapper.Tests.ConcreteClasses
 {
-    internal class TestContainer : MapContainer
+    internal class TestMapModule : MapModule
     {
-        public TestContainer()
+        public TestMapModule()
         {
             Register<Person, PersonMap>();
             Register<Address, AddressMap>();

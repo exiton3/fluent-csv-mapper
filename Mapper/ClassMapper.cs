@@ -3,21 +3,22 @@ using System;
 namespace Mapper
 {
     public class ClassMapper: IClassMapper
-      
     {
         private readonly IMapContainer _mapContainer;
+        private readonly IObjectStorageFactory _objectStorageFactory;
 
-        public ClassMapper(IMapContainer mapContainer)
+        public ClassMapper(IMapContainer mapContainer, IObjectStorageFactory objectStorageFactory)
         {
             _mapContainer = mapContainer;
+            _objectStorageFactory = objectStorageFactory;
         }
 
         #region IClassMapper Members
 
-        public ObjectStorage Store(object memento)
+        public IObjectStorage Store(object memento)
         {
             var classMap = _mapContainer.GetMapperFor(memento.GetType());
-            var objectStorage = new ObjectStorage();
+            var objectStorage = _objectStorageFactory.Create();
 
             foreach (var propInfo in classMap.Mappings)
             {
@@ -39,7 +40,7 @@ namespace Mapper
             return objectStorage;
         }
 
-        public object Restore(Type type, ObjectStorage storage)
+        public object Restore(Type type, IObjectStorage storage)
         {
             var classMap = _mapContainer.GetMapperFor(type);
             var restoredObject = classMap.Instance;
@@ -49,7 +50,7 @@ namespace Mapper
                 var value = data.Value;
                 if (mapping.IsReferenceProperty)
                 {
-                   var subObj = Restore(mapping.ReferenceType, value as ObjectStorage);
+                   var subObj = Restore(mapping.ReferenceType, value as IObjectStorage);
                     mapping.Setter(restoredObject, subObj);
                 }
                 else
@@ -68,5 +69,10 @@ namespace Mapper
         #endregion
 
        
+    }
+
+    public interface IObjectStorageFactory
+    {
+        IObjectStorage Create();
     }
 }

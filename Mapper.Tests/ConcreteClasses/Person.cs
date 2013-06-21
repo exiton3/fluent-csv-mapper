@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mapper.Tests
+namespace Mapper.Tests.ConcreteClasses
 {
     internal class Person
     {
