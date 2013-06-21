@@ -32,7 +32,7 @@ namespace Mapper.Tests
         [Test]
         public void RestoreInstanceFromDynamicVariantType()
         {
-            var dynamicVariantType = new DynamicVariantType();
+            var dynamicVariantType = new ObjectStorage();
             dynamicVariantType["Name"] = "Sergey";
             dynamicVariantType["Age"] = 28;
             var dateTime = DateTime.Now;
@@ -55,12 +55,12 @@ namespace Mapper.Tests
         [Test]
         public void RestoreReferenceProperty()
         {
-            var dynamicVariantType = new DynamicVariantType();
+            var dynamicVariantType = new ObjectStorage();
             dynamicVariantType["Name"] = "Sergey";
             dynamicVariantType["Age"] = 28;
             DateTime dateTime = DateTime.Now;
             dynamicVariantType["DoB"] = dateTime.ToShortDateString();
-            var addressDynamic = new DynamicVariantType();
+            var addressDynamic = new ObjectStorage();
             addressDynamic["Street"] = "some";
             addressDynamic["House"] = 123;
 
@@ -94,7 +94,7 @@ namespace Mapper.Tests
 
             ClassMapper translator = CreateTranslator();
 
-            DynamicVariantType dvt = translator.Store(person);
+            ObjectStorage dvt = translator.Store(person);
 
             Assert.That(dvt.Data["Name"], Is.EqualTo("John"));
             Assert.That(dvt.Data["Age"], Is.EqualTo(28));
@@ -110,7 +110,7 @@ namespace Mapper.Tests
 
             ClassMapper translator = CreateTranslator();
 
-            DynamicVariantType dvt = translator.Store(person);
+            ObjectStorage dvt = translator.Store(person);
 
             Assert.That(dvt.Data["DoB"], Is.EqualTo(dateTime.ToShortDateString()));
         }
@@ -131,9 +131,9 @@ namespace Mapper.Tests
 
             ClassMapper translator = CreateTranslator();
 
-            DynamicVariantType dvt = translator.Store(person);
+            ObjectStorage dvt = translator.Store(person);
 
-            var addressDynamic = dvt.Data["Address"] as DynamicVariantType;
+            var addressDynamic = dvt.Data["Address"] as ObjectStorage;
             Assert.That(addressDynamic, Is.Not.Null);
             Assert.That(addressDynamic["Street"], Is.EqualTo("some"));
             Assert.That(addressDynamic["House"], Is.EqualTo(123));

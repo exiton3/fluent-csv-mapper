@@ -4,7 +4,7 @@ namespace Mapper
 {
     public interface IClassMapper
     {
-        DynamicVariantType Store(object memento);
-        object Restore(Type type, DynamicVariantType storage);
+        ObjectStorage Store(object memento);
+        object Restore(Type type, ObjectStorage storage);
     }
 }
