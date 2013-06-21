@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMapModule.cs" />
+    <Compile Include="IObjectStorageFactory.cs" />
     <Compile Include="MapContainer.cs" />
     <Compile Include="MapModule.cs" />
     <Compile Include="IObjectStorage.cs" />
