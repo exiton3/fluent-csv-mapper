@@ -1,6 +1,6 @@
 using System;
 
-namespace Mapper
+namespace Mapper.Configuration
 {
     public interface IMapContainer
     {

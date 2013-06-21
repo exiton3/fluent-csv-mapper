@@ -1,4 +1,5 @@
 using System;
+using Mapper.Configuration;
 
 namespace Mapper.Tests.ConcreteClasses
 {

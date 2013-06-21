@@ -1,3 +1,5 @@
+using Mapper.Configuration;
+
 namespace Mapper
 {
     internal class PropertyMapOptions<T> : IPropertyMapOptions where T : class
