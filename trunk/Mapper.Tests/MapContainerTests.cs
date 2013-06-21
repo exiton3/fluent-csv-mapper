@@ -10,9 +10,9 @@ namespace Mapper.Tests
         public void RegisterAllTypesFormEachModules()
         {
             var container = new TestMapContainer();
-            Assert.That(container.IsMappingExist(typeof (Person)), Is.True);
-            Assert.That(container.IsMappingExist(typeof (Address)), Is.True);
-            Assert.That(container.IsMappingExist(typeof (Department)), Is.True);
+            Assert.That(container.IsMappingExists(typeof (Person)), Is.True);
+            Assert.That(container.IsMappingExists(typeof (Address)), Is.True);
+            Assert.That(container.IsMappingExists(typeof (Department)), Is.True);
         }
     }
 }

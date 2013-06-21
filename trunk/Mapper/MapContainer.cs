@@ -31,7 +31,7 @@ namespace Mapper
             throw new InvalidOperationException(string.Format("Mapping class {0} was not found", type.Name));
         }
 
-        public bool IsMappingExist(Type type)
+        public bool IsMappingExists(Type type)
         {
            return _mapConfigurations.ContainsKey(type);
         }

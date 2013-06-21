@@ -6,6 +6,6 @@ namespace Mapper
     {
         IMapConfiguration GetMapperFor(Type type);
 
-        bool IsMappingExist(Type type);
+        bool IsMappingExists(Type type);
     }
 }
