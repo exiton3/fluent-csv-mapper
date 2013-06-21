@@ -1,3 +1,5 @@
+using Mapper.Configuration;
+
 namespace Mapper.Tests.ConcreteClasses
 {
     internal class TestMapModule : MapModule

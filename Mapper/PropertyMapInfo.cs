@@ -1,8 +1,9 @@
 using System;
+using Mapper.Configuration;
 
 namespace Mapper
 {
-    public sealed class PropertyMapInfo<T> :  IPropertyMapInfo where T:class
+    internal sealed class PropertyMapInfo<T> :  IPropertyMapInfo where T:class
     {
         public Func<T, object> Getter { get; set; }
 

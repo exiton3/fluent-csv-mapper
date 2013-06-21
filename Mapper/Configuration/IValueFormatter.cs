@@ -1,4 +1,4 @@
-namespace Mapper
+namespace Mapper.Configuration
 {
     public interface IValueFormatter
     {

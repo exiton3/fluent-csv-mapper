@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mapper
+namespace Mapper.Configuration
 {
    public abstract class MapModule: IMapModule
     {
