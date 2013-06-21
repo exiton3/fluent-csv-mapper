@@ -6,5 +6,6 @@ namespace Mapper
     {
         IObjectStorage Store(object memento);
         object Restore(Type type, IObjectStorage storage);
+        bool CanMap(Type type);
     }
 }

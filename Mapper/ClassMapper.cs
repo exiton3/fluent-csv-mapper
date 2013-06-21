@@ -13,6 +13,11 @@ namespace Mapper
             _objectStorageFactory = objectStorageFactory;
         }
 
+        public bool CanMap(Type type)
+        {
+           return _mapContainer.IsMappingExists(type);
+        }
+
         #region IClassMapper Members
 
         public IObjectStorage Store(object memento)
