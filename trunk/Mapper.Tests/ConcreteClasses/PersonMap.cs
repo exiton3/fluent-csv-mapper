@@ -11,12 +11,4 @@ namespace Mapper.Tests.ConcreteClasses
             MapAsReference(x => x.Address, "Address");
         }
     }
-
-    class DepartamentMap:ClassMap<Department>
-    {
-        public DepartamentMap()
-        {
-            MapAsReference(x => x.Persons, "Persons");
-        } 
-    }
 }

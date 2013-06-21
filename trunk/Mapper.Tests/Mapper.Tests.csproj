@@ -46,6 +46,7 @@
     <Compile Include="ConcreteClasses\Address.cs" />
     <Compile Include="ConcreteClasses\AddressMap.cs" />
     <Compile Include="ConcreteClasses\DateTimeFormatter.cs" />
+    <Compile Include="ConcreteClasses\DepartamentMap.cs" />
     <Compile Include="ConcreteClasses\Department.cs" />
     <Compile Include="ConcreteClasses\DepartmentModule.cs" />
     <Compile Include="ConcreteClasses\ObjectStorage.cs" />
