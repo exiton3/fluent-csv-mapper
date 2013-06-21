@@ -2,13 +2,7 @@ using System;
 
 namespace Mapper
 {
-    interface IPropertyMapInfo<T> where T:class 
-    {
-        Func<T, object> Getter { get; set; }
-        Action<T, object> Setter { get; set; }
-    }
-
-    public sealed class PropertyMapInfo<T> : IPropertyMapInfo<T>, IPropertyMapInfo where T:class
+    public sealed class PropertyMapInfo<T> :  IPropertyMapInfo where T:class
     {
         public Func<T, object> Getter { get; set; }
 
