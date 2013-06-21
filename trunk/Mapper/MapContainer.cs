@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Mapper
 {
-    public class MapContainer : IMapContainer
+    public abstract class MapContainer : IMapContainer
     {
         private readonly Dictionary<Type, IMapConfiguration> _mapConfigurations = new Dictionary<Type, IMapConfiguration>();
 
