@@ -1,4 +1,4 @@
-namespace Mapper.Tests
+namespace Mapper.Tests.ConcreteClasses
 {
     internal class Address
     {

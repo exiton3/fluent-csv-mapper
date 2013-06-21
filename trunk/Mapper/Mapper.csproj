@@ -40,14 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ObjectStorage.cs" />
+    <Compile Include="IMapModule.cs" />
+    <Compile Include="MapContainer.cs" />
+    <Compile Include="MapModule.cs" />
+    <Compile Include="IObjectStorage.cs" />
     <Compile Include="IFluentSyntax.cs" />
     <Compile Include="IMapConfiguration.cs" />
     <Compile Include="IMapContainer.cs" />
     <Compile Include="IClassMapper.cs" />
     <Compile Include="IPropertyMapInfo.cs" />
     <Compile Include="IPropertyMapOptions.cs" />
-    <Compile Include="MapContainer.cs" />
     <Compile Include="PropertyMapOptions.cs" />
     <Compile Include="IValueFormatter.cs" />
     <Compile Include="ClassMap.cs" />

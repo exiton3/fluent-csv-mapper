@@ -1,4 +1,4 @@
-namespace Mapper.Tests
+namespace Mapper.Tests.ConcreteClasses
 {
     internal class PersonMap : ClassMap<Person>
     {
@@ -10,7 +10,13 @@ namespace Mapper.Tests
             Map(x => x.Numbers, "Phones");
             MapAsReference(x => x.Address, "Address");
         }
+    }
 
-       
+    class DepartamentMap:ClassMap<Department>
+    {
+        public DepartamentMap()
+        {
+            MapAsReference(x => x.Persons, "Persons");
+        } 
     }
 }

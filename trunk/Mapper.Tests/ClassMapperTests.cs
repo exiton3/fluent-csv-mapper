@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mapper.Tests.ConcreteClasses;
 using NUnit.Framework;
 
 namespace Mapper.Tests
@@ -16,17 +17,17 @@ namespace Mapper.Tests
 
         #endregion
 
-        private static TestContainer _mapContainer;
+        private static TestMapContainer _mapMapModule;
 
         private static ClassMapper CreateTranslator()
         {
-            if (_mapContainer == null)
+            if (_mapMapModule == null)
             {
-                _mapContainer = new TestContainer();
+                _mapMapModule = new TestMapContainer();
                 Console.WriteLine("Factory created");
             }
 
-            return new ClassMapper(_mapContainer);
+            return new ClassMapper(_mapMapModule,new ObjectStorageFactory());
         }
 
         [Test]
@@ -94,7 +95,7 @@ namespace Mapper.Tests
 
             ClassMapper translator = CreateTranslator();
 
-            ObjectStorage dvt = translator.Store(person);
+            var dvt = translator.Store(person);
 
             Assert.That(dvt.Data["Name"], Is.EqualTo("John"));
             Assert.That(dvt.Data["Age"], Is.EqualTo(28));
@@ -104,13 +105,13 @@ namespace Mapper.Tests
         [Test]
         public void StorePropertyInDifferentTypeInDynamicVariantTypeAccordingToMapping()
         {
-            DateTime dateTime = DateTime.Now;
+            var dateTime = DateTime.Now;
             var person = new Person {Age = 28, Name = "John", DoB = dateTime, Address = new Address()};
 
 
-            ClassMapper translator = CreateTranslator();
+            var translator = CreateTranslator();
 
-            ObjectStorage dvt = translator.Store(person);
+            var dvt = translator.Store(person);
 
             Assert.That(dvt.Data["DoB"], Is.EqualTo(dateTime.ToShortDateString()));
         }
@@ -118,7 +119,7 @@ namespace Mapper.Tests
         [Test]
         public void StoreReferenceProperty()
         {
-            DateTime dateTime = DateTime.Now;
+            var dateTime = DateTime.Now;
             var address = new Address {Street = "some", Number = 123};
             var person = new Person
                              {
@@ -127,11 +128,11 @@ namespace Mapper.Tests
                                  DoB = dateTime,
                                  Address = address
                              };
+            
 
+            var translator = CreateTranslator();
 
-            ClassMapper translator = CreateTranslator();
-
-            ObjectStorage dvt = translator.Store(person);
+            var dvt = translator.Store(person);
 
             var addressDynamic = dvt.Data["Address"] as ObjectStorage;
             Assert.That(addressDynamic, Is.Not.Null);

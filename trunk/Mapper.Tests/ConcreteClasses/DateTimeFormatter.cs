@@ -1,6 +1,6 @@
 using System;
 
-namespace Mapper.Tests
+namespace Mapper.Tests.ConcreteClasses
 {
     class DateTimeFormatter:IValueFormatter
     {
