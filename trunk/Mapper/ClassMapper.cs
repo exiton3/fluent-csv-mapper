@@ -14,17 +14,17 @@ namespace Mapper
 
         #region IClassMapper Members
 
-        public DynamicVariantType Store(object memento)
+        public ObjectStorage Store(object memento)
         {
             var classMap = _mapContainer.GetMapperFor(memento.GetType());
-            var dynamicVariantType = new DynamicVariantType();
+            var objectStorage = new ObjectStorage();
 
             foreach (var propInfo in classMap.Mappings)
             {
                 var getterValue = propInfo.Value.Getter(memento);
                 if (propInfo.Value.IsReferenceProperty)
                 {
-                    dynamicVariantType[propInfo.Key] = Store(getterValue);
+                    objectStorage.SetData(propInfo.Key, Store(getterValue));
                 }
                 else
                 {
@@ -32,14 +32,14 @@ namespace Mapper
                     {
                         getterValue = propInfo.Value.ValueFormatter.Format(getterValue);
                     }
-                    dynamicVariantType[propInfo.Key] = getterValue;
+                    objectStorage.SetData(propInfo.Key, getterValue);
                 }
             }
 
-            return dynamicVariantType;
+            return objectStorage;
         }
 
-        public object Restore(Type type, DynamicVariantType storage)
+        public object Restore(Type type, ObjectStorage storage)
         {
             var classMap = _mapContainer.GetMapperFor(type);
             var restoredObject = classMap.Instance;
@@ -49,7 +49,7 @@ namespace Mapper
                 var value = data.Value;
                 if (mapping.IsReferenceProperty)
                 {
-                   var subObj = Restore(mapping.ReferenceType, value as DynamicVariantType);
+                   var subObj = Restore(mapping.ReferenceType, value as ObjectStorage);
                     mapping.Setter(restoredObject, subObj);
                 }
                 else

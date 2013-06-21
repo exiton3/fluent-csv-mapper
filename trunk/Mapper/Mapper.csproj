@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicVariantType.cs" />
+    <Compile Include="ObjectStorage.cs" />
     <Compile Include="IFluentSyntax.cs" />
     <Compile Include="IMapConfiguration.cs" />
     <Compile Include="IMapContainer.cs" />
