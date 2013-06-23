@@ -1,7 +1,6 @@
 using System;
-using Mapper.Configuration;
 
-namespace Mapper
+namespace Mapper.Configuration
 {
     internal sealed class PropertyMapInfo<T> :  IPropertyMapInfo where T:class
     {
