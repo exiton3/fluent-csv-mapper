@@ -1,7 +1,6 @@
 using System;
-using Mapper.Configuration;
 
-namespace Mapper
+namespace Mapper.Configuration
 {
     public interface IPropertyMapInfo
     {
