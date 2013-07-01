@@ -11,7 +11,7 @@ namespace Mapper.Tests.ConcreteClasses
             Map(x => x.DoB, "DoB").UseFormatter<DateTimeFormatter>();
             Map(x => x.Numbers, "Phones");
             MapAsReference(x => x.Address, "Address");
-            Map(x => x.Gender, "Gender").UseTypeConverter<EnumToIntConverter>();
+            Map(x => x.Gender, "Gender").UseTypeConverter<EnumToIntConverter<Gender>>();
         }
     }
 }

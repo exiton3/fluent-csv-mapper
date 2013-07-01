@@ -8,14 +8,10 @@ namespace Mapper.Tests
     [TestFixture]
     public class ClassMapperTests
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
         }
-
-        #endregion
 
         private static TestMapContainer _mapMapModule;
 
@@ -27,23 +23,38 @@ namespace Mapper.Tests
                 Console.WriteLine("Factory created");
             }
 
-            return new ClassMapper(_mapMapModule,new ObjectStorageFactory());
+            return new ClassMapper(_mapMapModule, new ObjectStorageFactory());
+        }
+
+        [Test]
+        public void RestoreEnumPropertyFromStorage()
+        {
+            var storage = new ObjectStorage();
+            storage["Gender"] = 1;
+
+            var translator = CreateTranslator();
+
+            var restored = translator.Restore(typeof (Person), storage);
+
+            Assert.That(restored, Is.InstanceOf<Person>());
+            var person = restored as Person;
+            Assert.That(person.Gender, Is.EqualTo(Gender.Female));
         }
 
         [Test]
         public void RestoreInstanceFromDynamicVariantType()
         {
-            var dynamicVariantType = new ObjectStorage();
-            dynamicVariantType["Name"] = "Sergey";
-            dynamicVariantType["Age"] = 28;
+            var storage = new ObjectStorage();
+            storage["Name"] = "Sergey";
+            storage["Age"] = 28;
             var dateTime = DateTime.Now;
-            dynamicVariantType["DoB"] = dateTime.ToShortDateString();
+            storage["DoB"] = dateTime.ToShortDateString();
             var numbers = new List<int> {1, 2, 3, 4, 5};
-            dynamicVariantType["Phones"] = numbers;
+            storage["Phones"] = numbers;
 
             var translator = CreateTranslator();
 
-            object restoredObject = translator.Restore(typeof (Person), dynamicVariantType);
+            var restoredObject = translator.Restore(typeof (Person), storage);
 
             Assert.IsInstanceOf<Person>(restoredObject);
             var person = (Person) restoredObject;
@@ -56,19 +67,19 @@ namespace Mapper.Tests
         [Test]
         public void RestoreReferenceProperty()
         {
-            var dynamicVariantType = new ObjectStorage();
-            dynamicVariantType["Name"] = "Sergey";
-            dynamicVariantType["Age"] = 28;
-            DateTime dateTime = DateTime.Now;
-            dynamicVariantType["DoB"] = dateTime.ToShortDateString();
+            var storage = new ObjectStorage();
+            storage["Name"] = "Sergey";
+            storage["Age"] = 28;
+            var dateTime = DateTime.Now;
+            storage["DoB"] = dateTime.ToShortDateString();
             var addressDynamic = new ObjectStorage();
             addressDynamic["Street"] = "some";
             addressDynamic["House"] = 123;
 
-            dynamicVariantType["Address"] = addressDynamic;
+            storage["Address"] = addressDynamic;
 
-            ClassMapper translator = CreateTranslator();
-            object restoredObject = translator.Restore(typeof (Person), dynamicVariantType);
+            var translator = CreateTranslator();
+            var restoredObject = translator.Restore(typeof (Person), storage);
 
             Assert.That(restoredObject, Is.InstanceOf<Person>());
 
@@ -79,21 +90,42 @@ namespace Mapper.Tests
         }
 
         [Test]
+        public void StoreEnumPropertyInStorageTypeAccordingToMapping()
+        {
+            var dateTime = DateTime.Now;
+            var person = new Person
+                {
+                    Gender = Gender.Female,
+                    Age = 28,
+                    Name = "John",
+                    DoB = dateTime,
+                    Address = new Address()
+                };
+
+
+            var translator = CreateTranslator();
+
+            var dvt = translator.Store(person);
+
+            Assert.That(dvt.GetData("Gender"), Is.EqualTo(1));
+        }
+
+        [Test]
         public void StoreInstanceInDynamicVariantTypeAccordingToMapping()
         {
-            DateTime dateTime = DateTime.Now;
+            var dateTime = DateTime.Now;
             var numbers = new List<int> {1, 2, 3, 4, 5};
             var person = new Person
-                             {
-                                 Age = 28,
-                                 Name = "John",
-                                 DoB = dateTime,
-                                 Numbers = numbers,
-                                 Address = new Address()
-                             };
+                {
+                    Age = 28,
+                    Name = "John",
+                    DoB = dateTime,
+                    Numbers = numbers,
+                    Address = new Address()
+                };
 
 
-            ClassMapper translator = CreateTranslator();
+            var translator = CreateTranslator();
 
             var dvt = translator.Store(person);
 
@@ -117,41 +149,27 @@ namespace Mapper.Tests
         }
 
         [Test]
-        public void StoreEnumPropertyInStorageTypeAccordingToMapping()
-        {
-            var dateTime = DateTime.Now;
-            var person = new Person { Gender = Gender.Female, Age = 28, Name = "John", DoB = dateTime, Address = new Address() };
-
-
-            var translator = CreateTranslator();
-
-            var dvt = translator.Store(person);
-
-            Assert.That(dvt.GetData("Gender"), Is.EqualTo(1));
-        }
-
-        [Test]
         public void StoreReferenceProperty()
         {
             var dateTime = DateTime.Now;
             var address = new Address {Street = "some", Number = 123};
             var person = new Person
-                             {
-                                 Age = 28,
-                                 Name = "John",
-                                 DoB = dateTime,
-                                 Address = address
-                             };
-            
+                {
+                    Age = 28,
+                    Name = "John",
+                    DoB = dateTime,
+                    Address = address
+                };
+
 
             var translator = CreateTranslator();
 
             var dvt = translator.Store(person);
 
-            var addressDynamic = dvt.GetData("Address") as IObjectStorage;
-            Assert.That(addressDynamic, Is.Not.Null);
-            Assert.That(addressDynamic.GetData("Street"), Is.EqualTo("some"));
-            Assert.That(addressDynamic.GetData("House"), Is.EqualTo(123));
+            var storage = dvt.GetData("Address") as IObjectStorage;
+            Assert.That(storage, Is.Not.Null);
+            Assert.That(storage.GetData("Street"), Is.EqualTo("some"));
+            Assert.That(storage.GetData("House"), Is.EqualTo(123));
         }
     }
 }

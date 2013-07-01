@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\EnumToIntConverter.cs" />
     <Compile Include="Configuration\IMapModule.cs" />
     <Compile Include="Configuration\ITypeConverter.cs" />
     <Compile Include="Configuration\TypeConverter.cs" />
