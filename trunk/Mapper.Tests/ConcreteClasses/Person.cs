@@ -15,5 +15,7 @@ namespace Mapper.Tests.ConcreteClasses
         public List<int> Numbers { get; set; }
 
         public Address Address { get; set; }
+
+        public Gender Gender { get; set; }
     }
 }

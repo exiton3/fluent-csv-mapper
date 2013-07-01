@@ -13,6 +13,11 @@ namespace Mapper.Configuration
         {
             _propertyMapInfo.ValueFormatter = new TFormatter();
         }
+
+        public void UseTypeConverter<TConverter>() where TConverter : ITypeConverter, new()
+        {
+            _propertyMapInfo.TypeConverter = new TConverter();
+        }
     }
 
 }
