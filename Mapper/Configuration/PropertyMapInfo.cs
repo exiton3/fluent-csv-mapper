@@ -31,6 +31,13 @@ namespace Mapper.Configuration
         }
 
         public Type ReferenceType {get; set; }
+
+        public ITypeConverter TypeConverter { get; set; }
+
+        public bool IsTypeConverterSetted
+        {
+            get { return TypeConverter != null; }
+        }
     }
     
 }

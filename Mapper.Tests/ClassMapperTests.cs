@@ -117,6 +117,20 @@ namespace Mapper.Tests
         }
 
         [Test]
+        public void StoreEnumPropertyInStorageTypeAccordingToMapping()
+        {
+            var dateTime = DateTime.Now;
+            var person = new Person { Gender = Gender.Female, Age = 28, Name = "John", DoB = dateTime, Address = new Address() };
+
+
+            var translator = CreateTranslator();
+
+            var dvt = translator.Store(person);
+
+            Assert.That(dvt.Data["Gender"], Is.EqualTo(1));
+        }
+
+        [Test]
         public void StoreReferenceProperty()
         {
             var dateTime = DateTime.Now;

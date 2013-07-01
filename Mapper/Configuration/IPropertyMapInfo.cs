@@ -10,5 +10,7 @@ namespace Mapper.Configuration
         bool IsValueFormatterSetted { get; }
         bool IsReferenceProperty { get; }
         Type ReferenceType{ get; set; }
+        ITypeConverter TypeConverter { get; set; }
+        bool IsTypeConverterSetted { get; }
     }
 }
