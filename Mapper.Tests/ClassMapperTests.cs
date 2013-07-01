@@ -97,9 +97,9 @@ namespace Mapper.Tests
 
             var dvt = translator.Store(person);
 
-            Assert.That(dvt.Data["Name"], Is.EqualTo("John"));
-            Assert.That(dvt.Data["Age"], Is.EqualTo(28));
-            Assert.That(dvt.Data["Phones"], Is.EqualTo(numbers));
+            Assert.That(dvt.GetData("Name"), Is.EqualTo("John"));
+            Assert.That(dvt.GetData("Age"), Is.EqualTo(28));
+            Assert.That(dvt.GetData("Phones"), Is.EqualTo(numbers));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Mapper.Tests
 
             var dvt = translator.Store(person);
 
-            Assert.That(dvt.Data["DoB"], Is.EqualTo(dateTime.ToShortDateString()));
+            Assert.That(dvt.GetData("DoB"), Is.EqualTo(dateTime.ToShortDateString()));
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace Mapper.Tests
 
             var dvt = translator.Store(person);
 
-            Assert.That(dvt.Data["Gender"], Is.EqualTo(1));
+            Assert.That(dvt.GetData("Gender"), Is.EqualTo(1));
         }
 
         [Test]
@@ -148,10 +148,10 @@ namespace Mapper.Tests
 
             var dvt = translator.Store(person);
 
-            var addressDynamic = dvt.Data["Address"] as ObjectStorage;
+            var addressDynamic = dvt.GetData("Address") as IObjectStorage;
             Assert.That(addressDynamic, Is.Not.Null);
-            Assert.That(addressDynamic["Street"], Is.EqualTo("some"));
-            Assert.That(addressDynamic["House"], Is.EqualTo(123));
+            Assert.That(addressDynamic.GetData("Street"), Is.EqualTo("some"));
+            Assert.That(addressDynamic.GetData("House"), Is.EqualTo(123));
         }
     }
 }

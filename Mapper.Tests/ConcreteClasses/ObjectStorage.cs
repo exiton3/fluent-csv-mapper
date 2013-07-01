@@ -8,7 +8,7 @@ namespace Mapper.Tests.ConcreteClasses
     {
         private readonly Dictionary<string, object> _data = new Dictionary<string, object>();
 
-        public Dictionary<string, object> Data { get { return _data; } }
+        public IEnumerable<KeyValuePair<string, object>> Data { get { return _data; } }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -34,6 +34,13 @@ namespace Mapper.Tests.ConcreteClasses
         public virtual void SetData(string key, object objectStorage)
         {
             _data[key] = objectStorage;
+        }
+
+        public object GetData(string key)
+        {
+            object value;
+            _data.TryGetValue(key, out value);
+            return value;
         }
     }
 }
