@@ -49,7 +49,6 @@
     <Compile Include="ConcreteClasses\DepartamentMap.cs" />
     <Compile Include="ConcreteClasses\Department.cs" />
     <Compile Include="ConcreteClasses\DepartmentModule.cs" />
-    <Compile Include="ConcreteClasses\EnumToIntConverter.cs" />
     <Compile Include="ConcreteClasses\Gender.cs" />
     <Compile Include="ConcreteClasses\ObjectStorage.cs" />
     <Compile Include="ConcreteClasses\ObjectStorageFactory.cs" />

@@ -23,12 +23,12 @@ namespace Mapper
 
         public IObjectStorage Store(object memento)
         {
-            IMapConfiguration classMap = _mapContainer.GetMapperFor(memento.GetType());
-            IObjectStorage objectStorage = _objectStorageFactory.Create();
+            var classMap = _mapContainer.GetMapperFor(memento.GetType());
+            var objectStorage = _objectStorageFactory.Create();
 
             foreach (var propInfo in classMap.Mappings)
             {
-                object getterValue = propInfo.Value.Getter(memento);
+                var getterValue = propInfo.Value.Getter(memento);
                 if (propInfo.Value.IsReferenceProperty)
                 {
                     objectStorage.SetData(propInfo.Key, Store(getterValue));
@@ -54,15 +54,15 @@ namespace Mapper
 
         public object Restore(Type type, IObjectStorage storage)
         {
-            IMapConfiguration classMap = _mapContainer.GetMapperFor(type);
-            object restoredObject = classMap.Instance;
+            var classMap = _mapContainer.GetMapperFor(type);
+            var restoredObject = classMap.Instance;
             foreach (var data in storage.Data)
             {
-                IPropertyMapInfo mapping = classMap.GetMapping(data.Key);
-                object value = data.Value;
+                var mapping = classMap.GetMapping(data.Key);
+                var value = data.Value;
                 if (mapping.IsReferenceProperty)
                 {
-                    object subObj = Restore(mapping.ReferenceType, value as IObjectStorage);
+                    var subObj = Restore(mapping.ReferenceType, value as IObjectStorage);
                     mapping.Setter(restoredObject, subObj);
                 }
                 else
