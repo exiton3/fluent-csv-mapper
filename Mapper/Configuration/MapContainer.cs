@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mapper.Helpers;
 
 namespace Mapper.Configuration
 {
@@ -33,7 +34,9 @@ namespace Mapper.Configuration
 
         public bool IsMappingExists(Type type)
         {
-           return _mapConfigurations.ContainsKey(type);
+            Check.NotNull(type,"type");
+
+            return _mapConfigurations.ContainsKey(type);
         }
     }
 }

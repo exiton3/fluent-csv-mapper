@@ -1,3 +1,5 @@
+using Mapper.Helpers;
+
 namespace Mapper.Configuration
 {
     public interface IPropertyMapOptions : IFluentSyntax
