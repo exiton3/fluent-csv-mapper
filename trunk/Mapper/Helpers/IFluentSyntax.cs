@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Mapper
+namespace Mapper.Helpers
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public interface IFluentSyntax

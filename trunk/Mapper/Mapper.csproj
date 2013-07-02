@@ -39,11 +39,12 @@
     <Compile Include="Configuration\ITypeConverter.cs" />
     <Compile Include="Configuration\TypeConverter.cs" />
     <Compile Include="EnumToIntConverter.cs" />
+    <Compile Include="Helpers\Check.cs" />
     <Compile Include="IObjectStorageFactory.cs" />
     <Compile Include="Configuration\MapContainer.cs" />
     <Compile Include="Configuration\MapModule.cs" />
     <Compile Include="IObjectStorage.cs" />
-    <Compile Include="IFluentSyntax.cs" />
+    <Compile Include="Helpers\IFluentSyntax.cs" />
     <Compile Include="Configuration\IMapConfiguration.cs" />
     <Compile Include="Configuration\IMapContainer.cs" />
     <Compile Include="IClassMapper.cs" />

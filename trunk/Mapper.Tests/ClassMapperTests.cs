@@ -9,6 +9,13 @@ namespace Mapper.Tests
     public class ClassMapperTests
     {
         private static TestMapContainer _mapMapModule;
+        private ClassMapper _translator;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _translator = CreateTranslator();
+        }
 
         private static ClassMapper CreateTranslator()
         {
@@ -27,9 +34,7 @@ namespace Mapper.Tests
             var storage = new ObjectStorage();
             storage["Gender"] = 1;
 
-            var translator = CreateTranslator();
-
-            var restored = translator.Restore(typeof (Person), storage);
+            var restored = _translator.Restore(typeof (Person), storage);
 
             Assert.That(restored, Is.InstanceOf<Person>());
             var person = restored as Person;
@@ -136,9 +141,8 @@ namespace Mapper.Tests
             var person = new Person {Age = 28, Name = "John", DoB = dateTime, Address = new Address()};
 
 
-            var translator = CreateTranslator();
 
-            var dvt = translator.Store(person);
+            var dvt = _translator.Store(person);
 
             Assert.That(dvt.GetData("DoB"), Is.EqualTo(dateTime.ToShortDateString()));
         }
@@ -157,14 +161,19 @@ namespace Mapper.Tests
                 };
 
 
-            var translator = CreateTranslator();
 
-            var dvt = translator.Store(person);
+            var dvt = _translator.Store(person);
 
             var storage = dvt.GetData("Address") as IObjectStorage;
             Assert.That(storage, Is.Not.Null);
             Assert.That(storage.GetData("Street"), Is.EqualTo("some"));
             Assert.That(storage.GetData("House"), Is.EqualTo(123));
+        }
+
+        [Test]
+        public void ThorwsExceptionCanMapIfArgumentNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => { _translator.CanMap(null); });
         }
     }
 }

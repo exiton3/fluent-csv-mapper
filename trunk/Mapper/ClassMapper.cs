@@ -1,5 +1,6 @@
 using System;
 using Mapper.Configuration;
+using Mapper.Helpers;
 
 namespace Mapper
 {
@@ -16,19 +17,23 @@ namespace Mapper
 
         public bool CanMap(Type type)
         {
+            Check.NotNull(type, "type");
+
             return _mapContainer.IsMappingExists(type);
         }
 
         #region IClassMapper Members
 
-        public IObjectStorage Store(object memento)
+        public IObjectStorage Store(object objectToStore)
         {
-            var classMap = _mapContainer.GetMapperFor(memento.GetType());
+            Check.NotNull(objectToStore,"objectToStore");
+
+            var classMap = _mapContainer.GetMapperFor(objectToStore.GetType());
             var objectStorage = _objectStorageFactory.Create();
 
             foreach (var propInfo in classMap.Mappings)
             {
-                var getterValue = propInfo.Value.Getter(memento);
+                var getterValue = propInfo.Value.Getter(objectToStore);
                 if (propInfo.Value.IsReferenceProperty)
                 {
                     objectStorage.SetData(propInfo.Key, Store(getterValue));
@@ -54,6 +59,9 @@ namespace Mapper
 
         public object Restore(Type type, IObjectStorage storage)
         {
+            Check.NotNull(storage, "storage");
+            Check.NotNull(type, "type");
+
             var classMap = _mapContainer.GetMapperFor(type);
             var restoredObject = classMap.Instance;
             foreach (var data in storage.Data)
