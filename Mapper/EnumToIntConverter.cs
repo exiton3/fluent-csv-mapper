@@ -1,18 +1,16 @@
 using System;
+using Mapper.Configuration;
 
-namespace Mapper.Configuration
+namespace Mapper
 {
     public class EnumToIntConverter<TEnum> : TypeConverter<TEnum, int>
     {
         protected override int Convert(TEnum source)
         {
             if (!typeof (TEnum).IsEnum)
-            {
-                throw new ArgumentException("The generic type must be Enum type");
-            }
+                throw new ArgumentException("Generic Type must be a System.Enum");
 
-            var convert = System.Convert.ToInt32(source);
-            return convert;
+            return System.Convert.ToInt32(source);
         }
 
         protected override TEnum ConvertBack(int source)

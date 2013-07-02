@@ -35,10 +35,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\EnumToIntConverter.cs" />
     <Compile Include="Configuration\IMapModule.cs" />
     <Compile Include="Configuration\ITypeConverter.cs" />
     <Compile Include="Configuration\TypeConverter.cs" />
+    <Compile Include="EnumToIntConverter.cs" />
     <Compile Include="IObjectStorageFactory.cs" />
     <Compile Include="Configuration\MapContainer.cs" />
     <Compile Include="Configuration\MapModule.cs" />

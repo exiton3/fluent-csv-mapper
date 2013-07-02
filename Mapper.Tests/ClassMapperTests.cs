@@ -8,11 +8,6 @@ namespace Mapper.Tests
     [TestFixture]
     public class ClassMapperTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
         private static TestMapContainer _mapMapModule;
 
         private static ClassMapper CreateTranslator()
