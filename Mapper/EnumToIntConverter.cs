@@ -3,13 +3,13 @@ using Mapper.Configuration;
 
 namespace Mapper
 {
-    public class EnumToIntConverter<TEnum> : TypeConverter<TEnum, int>
+    public class EnumToIntConverter<TEnum> : TypeConverter<TEnum, int> where TEnum:IConvertible
     {
         protected override int Convert(TEnum source)
         {
+
             if (!typeof (TEnum).IsEnum)
                 throw new ArgumentException("Generic Type must be a System.Enum");
-
             return System.Convert.ToInt32(source);
         }
 
