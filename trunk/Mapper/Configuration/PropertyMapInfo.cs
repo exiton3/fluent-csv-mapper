@@ -20,7 +20,7 @@ namespace Mapper.Configuration
 
         public IValueFormatter ValueFormatter { get; set; }
 
-        public bool IsValueFormatterSetted
+        public bool IsValueFormatterSet
         {
             get { return ValueFormatter != null; }
         }
@@ -34,7 +34,7 @@ namespace Mapper.Configuration
 
         public ITypeConverter TypeConverter { get; set; }
 
-        public bool IsTypeConverterSetted
+        public bool IsTypeConverterSet
         {
             get { return TypeConverter != null; }
         }

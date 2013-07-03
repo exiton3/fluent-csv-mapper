@@ -40,12 +40,12 @@ namespace Mapper
                 }
                 else
                 {
-                    if (propInfo.Value.IsValueFormatterSetted)
+                    if (propInfo.Value.IsValueFormatterSet)
                     {
                         getterValue = propInfo.Value.ValueFormatter.Format(getterValue);
                     }
 
-                    if (propInfo.Value.IsTypeConverterSetted)
+                    if (propInfo.Value.IsTypeConverterSet)
                     {
                         getterValue = propInfo.Value.TypeConverter.Convert(getterValue);
                     }
@@ -75,12 +75,12 @@ namespace Mapper
                 }
                 else
                 {
-                    if (mapping.IsValueFormatterSetted)
+                    if (mapping.IsValueFormatterSet)
                     {
                         value = mapping.ValueFormatter.Parse((string) data.Value);
                     }
 
-                    if (mapping.IsTypeConverterSetted)
+                    if (mapping.IsTypeConverterSet)
                     {
                         value = mapping.TypeConverter.ConvertBack(data.Value);
                     }
