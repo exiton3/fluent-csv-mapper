@@ -7,10 +7,10 @@ namespace Mapper.Configuration
         Func<object, object> Getter { get;  }
         Action<object, object> Setter { get; }
         IValueFormatter ValueFormatter { get; set; }
-        bool IsValueFormatterSetted { get; }
+        bool IsValueFormatterSet { get; }
         bool IsReferenceProperty { get; }
         Type ReferenceType{ get; set; }
         ITypeConverter TypeConverter { get; set; }
-        bool IsTypeConverterSetted { get; }
+        bool IsTypeConverterSet { get; }
     }
 }
