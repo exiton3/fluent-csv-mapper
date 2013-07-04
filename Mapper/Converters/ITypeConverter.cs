@@ -1,4 +1,4 @@
-namespace Mapper.Configuration
+namespace Mapper.Converters
 {
     public interface ITypeConverter
     {

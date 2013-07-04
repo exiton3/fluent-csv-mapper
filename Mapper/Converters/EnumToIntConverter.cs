@@ -1,7 +1,6 @@
 using System;
-using Mapper.Configuration;
 
-namespace Mapper
+namespace Mapper.Converters
 {
     public class EnumToIntConverter<TEnum> : TypeConverter<TEnum, int> where TEnum:IConvertible
     {

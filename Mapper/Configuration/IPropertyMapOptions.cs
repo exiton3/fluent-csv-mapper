@@ -1,3 +1,4 @@
+using Mapper.Converters;
 using Mapper.Helpers;
 
 namespace Mapper.Configuration

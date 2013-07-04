@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Mapper
+namespace Mapper.Helpers
 {
     internal static class PropertyExpressionHelper
     {

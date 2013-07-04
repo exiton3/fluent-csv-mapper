@@ -1,4 +1,5 @@
 using System;
+using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
