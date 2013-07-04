@@ -5,6 +5,6 @@ namespace Mapper.Configuration
 {
     public interface IMapModule
     {
-        Dictionary<Type, IMapConfiguration> GetAllMappings();
+        Dictionary<Type, IClassMap> GetAllMappings();
     }
 }

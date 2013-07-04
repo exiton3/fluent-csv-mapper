@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Mapper.Configuration
 {
-    public interface IMapConfiguration
+    public interface IClassMap
     {
         Dictionary<string, IPropertyMapInfo> Mappings { get; }
         object Instance { get; }

@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Mapper.Helpers;
 
 namespace Mapper.Configuration
 {
-    public abstract class ClassMap<T> : IMapConfiguration where T : class,new()
+    public abstract class ClassMap<T> : IClassMap where T : class,new()
     {
         private readonly Dictionary<string, IPropertyMapInfo> _mappings = new Dictionary<string,IPropertyMapInfo>();
 

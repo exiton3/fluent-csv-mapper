@@ -4,7 +4,7 @@ using Mapper.Converters;
 
 namespace Mapper.Tests.ConcreteClasses
 {
-    internal class DateTimeFormatter : ValueFormatter<DateTime>
+    class DateToStringFormatter: ValueFormatter<DateTime>
     {
         protected override string Format(DateTime source)
         {

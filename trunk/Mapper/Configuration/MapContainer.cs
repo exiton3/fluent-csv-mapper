@@ -6,7 +6,7 @@ namespace Mapper.Configuration
 {
     public abstract class MapContainer : IMapContainer
     {
-        private readonly Dictionary<Type, IMapConfiguration> _mapConfigurations = new Dictionary<Type, IMapConfiguration>();
+        private readonly Dictionary<Type, IClassMap> _mapConfigurations = new Dictionary<Type, IClassMap>();
 
         protected void RegisterModule<TModule>() where TModule : IMapModule, new()
         {
@@ -22,9 +22,9 @@ namespace Mapper.Configuration
             }
         }
 
-        public IMapConfiguration GetMapperFor(Type type)
+        public IClassMap GetMapperFor(Type type)
         {
-            IMapConfiguration mapping;
+            IClassMap mapping;
             if (_mapConfigurations.TryGetValue(type, out mapping))
             {
                 return mapping;
