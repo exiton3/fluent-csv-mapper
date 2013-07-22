@@ -11,11 +11,11 @@ namespace Mapper.Tests
         [SetUp]
         public void SetUp()
         {
-            _translator = CreateTranslator();
+            _classMapper = CreateTranslator();
         }
 
         private static TestMapContainer _mapMapModule;
-        private ClassMapper _translator;
+        private ClassMapper _classMapper;
 
         private static ClassMapper CreateTranslator()
         {
@@ -47,7 +47,7 @@ namespace Mapper.Tests
             var storage = new ObjectStorage();
             storage["Gender"] = 1;
 
-            var restored = _translator.Restore(typeof (Person), storage);
+            var restored = _classMapper.Restore(typeof (Person), storage);
 
             Assert.That(restored, Is.InstanceOf<Person>());
             var person = restored as Person;
@@ -66,7 +66,7 @@ namespace Mapper.Tests
             storage["Phones"] = numbers;
 
 
-            var restoredObject = _translator.Restore(typeof (Person), storage);
+            var restoredObject = _classMapper.Restore(typeof (Person), storage);
 
             Assert.IsInstanceOf<Person>(restoredObject);
             var person = (Person) restoredObject;
@@ -90,7 +90,7 @@ namespace Mapper.Tests
 
             storage["Address"] = addressDynamic;
 
-            var restoredObject = _translator.Restore(typeof (Person), storage);
+            var restoredObject = _classMapper.Restore(typeof (Person), storage);
 
             Assert.That(restoredObject, Is.InstanceOf<Person>());
 
@@ -105,7 +105,7 @@ namespace Mapper.Tests
         {
             var person = MakePerson(x => x.Gender = Gender.Female);
 
-            var dvt = _translator.Store(person);
+            var dvt = _classMapper.Store(person);
 
             Assert.That(dvt.GetData("Gender"), Is.EqualTo(1));
         }
@@ -116,7 +116,7 @@ namespace Mapper.Tests
             var numbers = new List<int> {1, 2, 3, 4, 5};
             var person = MakePerson(x=> x.Numbers = numbers);
 
-            var dvt = _translator.Store(person);
+            var dvt = _classMapper.Store(person);
 
             Assert.That(dvt.GetData("Name"), Is.EqualTo("John"));
             Assert.That(dvt.GetData("Age"), Is.EqualTo(28));
@@ -128,7 +128,7 @@ namespace Mapper.Tests
         {
             var dateTime = new DateTime(1234, 2, 1);
             var person = MakePerson(x=>x.DoB = dateTime);
-            var dvt = _translator.Store(person);
+            var dvt = _classMapper.Store(person);
 
             Assert.That(dvt.GetData("DoB"), Is.EqualTo(dateTime.ToShortDateString()));
         }
@@ -139,7 +139,7 @@ namespace Mapper.Tests
             var address = new Address {Street = "some", Number = 123};
             var person = MakePerson(x=>x.Address = address);
 
-            var dvt = _translator.Store(person);
+            var dvt = _classMapper.Store(person);
 
             var storage = dvt.GetData("Address") as IObjectStorage;
             Assert.That(storage, Is.Not.Null);
@@ -150,7 +150,23 @@ namespace Mapper.Tests
         [Test]
         public void ThorwsExceptionCanMapIfArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>(() => { _translator.CanMap(null); });
+            Assert.Throws<ArgumentNullException>(() => { _classMapper.CanMap(null); });
         }
+
+
+        [Test]
+        public void SkipsPropertiesWichMappingNotPresentInMappingButExistInStorage()
+        {
+            var storage = new ObjectStorage();
+            storage["NotValid"] = "some";
+            storage["Name"] = "Bill";
+            storage["Age"] = 28;
+
+            var person = _classMapper.Restore(typeof (Person), storage) as Person;
+            Assert.That(person, Is.Not.Null);
+            Assert.That(person.Name,Is.EqualTo("Bill"));
+            Assert.That(person.Age,Is.EqualTo(28));
+        }
+
     }
 }

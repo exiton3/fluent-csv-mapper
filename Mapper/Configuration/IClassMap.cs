@@ -7,5 +7,6 @@ namespace Mapper.Configuration
         Dictionary<string, IPropertyMapInfo> Mappings { get; }
         object Instance { get; }
         IPropertyMapInfo GetMapping(string name);
+        bool IsMappingForPropertyExist(string name);
     }
 }

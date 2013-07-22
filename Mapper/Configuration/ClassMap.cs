@@ -18,9 +18,19 @@ namespace Mapper.Configuration
             get { return _mappings; }
         }
 
+        public bool IsMappingForPropertyExist(string name)
+        {
+            return _mappings.ContainsKey(name);
+        }
+
         public IPropertyMapInfo GetMapping(string name)
         {
-            return _mappings[name];
+            IPropertyMapInfo mapping;
+            if (_mappings.TryGetValue(name, out mapping))
+            {
+                return _mappings[name];
+            }
+            throw new MapperMappingException(string.Format("Mapping for property {0} was not found in {1} mapping class.", name, GetType().Name), name);
         }
 
 
