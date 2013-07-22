@@ -66,6 +66,10 @@ namespace Mapper
             var restoredObject = classMap.Instance;
             foreach (var data in storage.Data)
             {
+                if (!classMap.IsMappingForPropertyExist(data.Key))
+                {
+                    continue;
+                }
                 var mapping = classMap.GetMapping(data.Key);
                 var value = data.Value;
                 if (mapping.IsReferenceProperty)
