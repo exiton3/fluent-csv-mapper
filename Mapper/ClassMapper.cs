@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Mapper.Configuration;
 using Mapper.Helpers;
 
@@ -31,7 +30,7 @@ namespace Mapper
         {
             Check.NotNull(objectToStore,"objectToStore");
 
-            var classMap = _mapContainer.GetMapperFor(objectToStore.GetType());
+            var classMap = _mapContainer.GetMappingFor(objectToStore.GetType());
             var objectStorage = _objectStorageFactory.Create();
 
             foreach (var propInfo in classMap.Mappings)
@@ -79,7 +78,7 @@ namespace Mapper
             Check.NotNull(storage, "storage");
             Check.NotNull(type, "type");
 
-            var classMap = _mapContainer.GetMapperFor(type);
+            var classMap = _mapContainer.GetMappingFor(type);
             var restoredObject = classMap.Instance;
             foreach (var data in storage.Data)
             {
