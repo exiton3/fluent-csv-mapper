@@ -22,7 +22,7 @@ namespace Mapper.Configuration
             }
         }
 
-        public IClassMap GetMapperFor(Type type)
+        public IClassMap GetMappingFor(Type type)
         {
             IClassMap mapping;
             if (_mapConfigurations.TryGetValue(type, out mapping))

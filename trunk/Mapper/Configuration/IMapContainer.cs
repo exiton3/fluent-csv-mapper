@@ -4,7 +4,7 @@ namespace Mapper.Configuration
 {
     public interface IMapContainer
     {
-        IClassMap GetMapperFor(Type type);
+        IClassMap GetMappingFor(Type type);
 
         bool IsMappingExists(Type type);
     }
