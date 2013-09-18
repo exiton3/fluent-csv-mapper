@@ -33,12 +33,21 @@ namespace Mapper.Configuration
 
         public Type ReferenceType {get; set; }
 
+        public bool IsCollectionProperty
+        {
+            get { return CollectionElementType != null; }
+        }
+
+        public Type CollectionElementType { get; set; }
+
         public ITypeConverter TypeConverter { get; set; }
 
         public bool IsTypeConverterSet
         {
             get { return TypeConverter != null; }
         }
+
+        public Type CollectionType { get; set; }
     }
     
 }

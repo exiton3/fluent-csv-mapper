@@ -18,4 +18,9 @@ namespace Mapper.Tests.ConcreteClasses
 
         public Gender Gender { get; set; }
     }
+
+    class Manager : Person
+    {
+        public double Salary { get; set; }
+    }
 }

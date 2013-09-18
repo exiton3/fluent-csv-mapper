@@ -168,5 +168,61 @@ namespace Mapper.Tests
             Assert.That(person.Age,Is.EqualTo(28));
         }
 
+        [Test]
+        public void StoreCollectionProperty()
+        {
+            var department = new Department
+                {
+                    Persons = new List<Person>
+                        {
+                            MakePerson(x=>x.Name = "First"),
+                            MakePerson(x=>x.Name = "Second")
+                        }
+                };
+
+            var objectStorage = _classMapper.Store(department);
+
+            var data = objectStorage.GetData("Persons");
+
+            Assert.That(data,Is.InstanceOf<List<IObjectStorage>>());
+
+            var first = ((List<IObjectStorage>) data)[0] ;
+            var second = ((List<IObjectStorage>) data)[1] ;
+
+            Assert.That("First",Is.EqualTo(first.GetData("Name")));
+            Assert.That("Second",Is.EqualTo(second.GetData("Name")));
+        }
+
+        [Test]
+        public void RestoreCollectionPropertyFromStorage()
+        {
+            var storage = new ObjectStorage();
+            var objectStorages = new List<IObjectStorage>
+                {
+                    MakePersonObjectStorage("First"),
+                    MakePersonObjectStorage("Second"),
+                };
+            storage["Persons"] = objectStorages;
+
+            var restoredObject = _classMapper.Restore(typeof(Department), storage);
+
+            Assert.That(restoredObject ,Is.InstanceOf<Department>());
+            var department = (Department) restoredObject;
+
+            Assert.That(department.Persons.Count, Is.EqualTo(2));
+        }
+
+        private static ObjectStorage MakePersonObjectStorage(string name)
+        {
+            var storage = new ObjectStorage();
+            storage["Name"] = name;
+            storage["Age"] = 28;
+            var dateTime = DateTime.Now;
+            storage["DoB"] = dateTime.ToShortDateString();
+            var addressDynamic = new ObjectStorage();
+            addressDynamic["Street"] = "some";
+            addressDynamic["House"] = 123;
+            return storage;
+        }
     }
 }
