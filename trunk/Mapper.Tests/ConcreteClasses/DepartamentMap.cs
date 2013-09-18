@@ -6,7 +6,7 @@ namespace Mapper.Tests.ConcreteClasses
     {
         public DepartamentMap()
         {
-            MapAsReference(x => x.Persons, "Persons");
+            MapAsCollection(x => x.Persons, "Persons");
         } 
     }
 }

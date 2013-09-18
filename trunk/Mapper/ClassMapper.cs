@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Mapper.Configuration;
 using Mapper.Helpers;
 
@@ -34,23 +37,37 @@ namespace Mapper
             foreach (var propInfo in classMap.Mappings)
             {
                 var getterValue = propInfo.Value.Getter(objectToStore);
-                if (propInfo.Value.IsReferenceProperty)
+                if (propInfo.Value.IsCollectionProperty)
                 {
-                    objectStorage.SetData(propInfo.Key, Store(getterValue));
+                    var objectStorages = new List<IObjectStorage>();
+                    foreach (var obj in (IEnumerable) getterValue)
+                    {
+                        var storage = Store(obj);
+                        objectStorages.Add(storage);
+                    }
+                    objectStorage.SetData(propInfo.Key, objectStorages);
                 }
                 else
                 {
-                    if (propInfo.Value.IsValueFormatterSet)
+                    if (propInfo.Value.IsReferenceProperty)
                     {
-                        getterValue = propInfo.Value.ValueFormatter.Format(getterValue);
+                        objectStorage.SetData(propInfo.Key, Store(getterValue));
                     }
 
-                    if (propInfo.Value.IsTypeConverterSet)
+                    else
                     {
-                        getterValue = propInfo.Value.TypeConverter.Convert(getterValue);
-                    }
+                        if (propInfo.Value.IsValueFormatterSet)
+                        {
+                            getterValue = propInfo.Value.ValueFormatter.Format(getterValue);
+                        }
 
-                    objectStorage.SetData(propInfo.Key, getterValue);
+                        if (propInfo.Value.IsTypeConverterSet)
+                        {
+                            getterValue = propInfo.Value.TypeConverter.Convert(getterValue);
+                        }
+
+                        objectStorage.SetData(propInfo.Key, getterValue);
+                    }
                 }
             }
 
@@ -72,24 +89,40 @@ namespace Mapper
                 }
                 var mapping = classMap.GetMapping(data.Key);
                 var value = data.Value;
-                if (mapping.IsReferenceProperty)
+                if (mapping.IsCollectionProperty)
                 {
-                    var subObj = Restore(mapping.ReferenceType, value as IObjectStorage);
-                    mapping.Setter(restoredObject, subObj);
+                    var collectionType = typeof (List<>);
+                    var genericType = collectionType.MakeGenericType(mapping.CollectionElementType);
+                    var objectList = (IList)Activator.CreateInstance(genericType);
+                    
+                    foreach (var storageItem in value as IEnumerable)
+                    {
+                        var restoredItem = Restore(mapping.CollectionElementType, (IObjectStorage)storageItem);
+                        objectList.Add(restoredItem);
+                    }
+                    mapping.Setter(restoredObject, objectList);
                 }
                 else
                 {
-                    if (mapping.IsValueFormatterSet)
+                    if (mapping.IsReferenceProperty)
                     {
-                        value = mapping.ValueFormatter.Parse((string) data.Value);
+                        var subObj = Restore(mapping.ReferenceType, value as IObjectStorage);
+                        mapping.Setter(restoredObject, subObj);
                     }
-
-                    if (mapping.IsTypeConverterSet)
+                    else
                     {
-                        value = mapping.TypeConverter.ConvertBack(data.Value);
-                    }
+                        if (mapping.IsValueFormatterSet)
+                        {
+                            value = mapping.ValueFormatter.Parse((string) data.Value);
+                        }
 
-                    mapping.Setter(restoredObject, value);
+                        if (mapping.IsTypeConverterSet)
+                        {
+                            value = mapping.TypeConverter.ConvertBack(data.Value);
+                        }
+
+                        mapping.Setter(restoredObject, value);
+                    }
                 }
             }
 

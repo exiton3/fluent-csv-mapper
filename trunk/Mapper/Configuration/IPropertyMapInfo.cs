@@ -13,5 +13,8 @@ namespace Mapper.Configuration
         Type ReferenceType{ get; set; }
         ITypeConverter TypeConverter { get; set; }
         bool IsTypeConverterSet { get; }
+        bool IsCollectionProperty { get; }
+        Type CollectionElementType { get; set; }
+        Type CollectionType { get; set; }
     }
 }

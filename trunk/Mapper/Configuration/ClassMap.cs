@@ -49,6 +49,18 @@ namespace Mapper.Configuration
             _mappings.Add(name, propInfo);
         }
 
+        protected void MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
+        {
+            var propInfo = CreatePropertyMapInfo(getterExpression);
+
+            var collectionType = typeof (TValue);
+            var genericArguments = collectionType.GetGenericArguments();
+            propInfo.CollectionType = collectionType;
+            propInfo.CollectionElementType = genericArguments[0];
+
+            _mappings.Add(name, propInfo);
+        }
+
        
         private PropertyMapInfo<T> CreatePropertyMapInfo<TValue>(Expression<Func<T, TValue>> getterExpression)
         {
