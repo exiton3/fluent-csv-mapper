@@ -6,12 +6,12 @@ namespace Mapper.Helpers
 {
     internal static class PropertyExpressionHelper
     {
-        public static Func<TContainer, TProperty> InitializeGetter<TContainer, TProperty>(Expression<Func<TContainer, TProperty>> getterExpression) where TContainer : class
+        public static Func<TContainer, TProperty> InitializeGetter<TContainer, TProperty>(Expression<Func<TContainer, TProperty>> getterExpression) //where TContainer : class
         {
             return getterExpression.Compile();
         }
 
-        public static Action<TContainer, TProperty> InitializeSetter<TContainer, TProperty>(Expression<Func<TContainer, TProperty>> getter) where TContainer : class
+        public static Action<TContainer, TProperty> InitializeSetter<TContainer, TProperty>(Expression<Func<TContainer, TProperty>> getter) //where TContainer : class
         {
             var propertyInfo = (getter.Body as MemberExpression).Member as PropertyInfo;
             if (propertyInfo == null)

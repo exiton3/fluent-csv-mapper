@@ -147,6 +147,21 @@ namespace Mapper.Tests
             Assert.That(storage.GetData("House"), Is.EqualTo(123));
         }
 
+
+        [Test]
+        public void StoreNullableProperty()
+        {
+            var jobInfo = new JobInfo {Position = "Developer", Salary = 1000};
+            var person = MakePerson(x => x.JobInfo = jobInfo);
+
+            var dvt = _classMapper.Store(person);
+
+            var storage = dvt.GetData("JobInfo") as IObjectStorage;
+            Assert.That(storage, Is.Not.Null);
+            Assert.That(storage.GetData("Position"), Is.EqualTo("Developer"));
+            Assert.That(storage.GetData("Salary"), Is.EqualTo(1000));
+        }
+
         [Test]
         public void ThorwsExceptionCanMapIfArgumentNull()
         {

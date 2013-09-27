@@ -3,7 +3,7 @@ using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
-    internal sealed class PropertyMapInfo<T> :  IPropertyMapInfo where T:class
+    internal sealed class PropertyMapInfo<T> :  IPropertyMapInfo //where T:class
     {
         public Func<T, object> Getter { get; set; }
 
@@ -26,19 +26,7 @@ namespace Mapper.Configuration
             get { return ValueFormatter != null; }
         }
 
-        public bool IsReferenceProperty
-        {
-            get {return ReferenceType != null; }
-        }
-
-        public Type ReferenceType {get; set; }
-
-        public bool IsCollectionProperty
-        {
-            get { return CollectionElementType != null; }
-        }
-
-        public Type CollectionElementType { get; set; }
+        public Type PropertyType { get; set; }
 
         public ITypeConverter TypeConverter { get; set; }
 
@@ -47,7 +35,7 @@ namespace Mapper.Configuration
             get { return TypeConverter != null; }
         }
 
-        public Type CollectionType { get; set; }
+        public PropertyKind PropertyKind { get; set; }
     }
     
 }

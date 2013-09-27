@@ -5,7 +5,7 @@ using Mapper.Helpers;
 
 namespace Mapper.Configuration
 {
-    public abstract class ClassMap<T> : IClassMap where T : class, new()
+    public abstract class ClassMap<T> : IClassMap where T :  new()
     {
         private readonly Dictionary<string, IPropertyMapInfo> _mappings = new Dictionary<string,IPropertyMapInfo>();
 
@@ -36,7 +36,8 @@ namespace Mapper.Configuration
 
         protected IPropertyMapOptions Map<TValue>(Expression<Func<T, TValue>> getterExpression,string name)
         {
-            var propInfo = CreatePropertyMapInfo(getterExpression);
+            var propInfo = CreatePropertyMapInfo(getterExpression,PropertyKind.Value);
+            propInfo.PropertyType = typeof (TValue);
             _propertyMapOptions = new PropertyMapOptions<T>(propInfo);
             _mappings.Add(name, propInfo);
             return _propertyMapOptions;
@@ -44,25 +45,30 @@ namespace Mapper.Configuration
 
         protected void MapAsReference<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
-            var propInfo = CreatePropertyMapInfo(getterExpression);
-            propInfo.ReferenceType = typeof (TValue);
+            var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Reference);
+            propInfo.PropertyType = typeof (TValue);
+            _mappings.Add(name, propInfo);
+        }
+
+        protected void MapNullable<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
+        {
+            var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Nullable);
+            propInfo.PropertyType = typeof(TValue).GetGenericArguments()[0];
             _mappings.Add(name, propInfo);
         }
 
         protected void MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
-            var propInfo = CreatePropertyMapInfo(getterExpression);
+            var propInfo = CreatePropertyMapInfo(getterExpression,PropertyKind.Collection);
 
             var collectionType = typeof (TValue);
             var genericArguments = collectionType.GetGenericArguments();
-            propInfo.CollectionType = collectionType;
-            propInfo.CollectionElementType = genericArguments[0];
-
+            propInfo.PropertyType = genericArguments[0];
             _mappings.Add(name, propInfo);
         }
 
        
-        private PropertyMapInfo<T> CreatePropertyMapInfo<TValue>(Expression<Func<T, TValue>> getterExpression)
+        private PropertyMapInfo<T> CreatePropertyMapInfo<TValue>(Expression<Func<T, TValue>> getterExpression, PropertyKind propertyKind)
         {
             var setter = new Action<T, object>((o, v) => PropertyExpressionHelper.InitializeSetter(getterExpression)(o, (TValue) v));
             var getter = new Func<T, object>(o => PropertyExpressionHelper.InitializeGetter(getterExpression)(o));
@@ -70,7 +76,8 @@ namespace Mapper.Configuration
             var propInfo = new PropertyMapInfo<T>
                                {
                                    Setter = setter,
-                                   Getter = getter
+                                   Getter = getter,
+                                   PropertyKind = propertyKind
                                };
             return propInfo;
         }

@@ -2,7 +2,7 @@ using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
-    internal class PropertyMapOptions<T> : IPropertyMapOptions where T : class
+    internal class PropertyMapOptions<T> : IPropertyMapOptions 
     {
         private readonly PropertyMapInfo<T> _propertyMapInfo;
 
