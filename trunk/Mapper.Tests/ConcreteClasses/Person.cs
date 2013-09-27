@@ -17,6 +17,8 @@ namespace Mapper.Tests.ConcreteClasses
         public Address Address { get; set; }
 
         public Gender Gender { get; set; }
+
+        public JobInfo? JobInfo { get; set; }
     }
 
     class Manager : Person
