@@ -57,10 +57,18 @@
     <Compile Include="Converters\IValueFormatter.cs" />
     <Compile Include="Configuration\ClassMap.cs" />
     <Compile Include="ClassMapper.cs" />
+    <Compile Include="Mappers\CollectionMapper.cs" />
+    <Compile Include="Mappers\IMapper.cs" />
+    <Compile Include="Mappers\IMapperRegistry.cs" />
+    <Compile Include="Mappers\MapperRegistry.cs" />
+    <Compile Include="Mappers\NullableMapper.cs" />
+    <Compile Include="Mappers\ReferenceMapper.cs" />
+    <Compile Include="Mappers\ValueMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\PropertyExpressionHelper.cs" />
     <Compile Include="Configuration\PropertyMapInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

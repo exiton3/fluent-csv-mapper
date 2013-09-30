@@ -29,7 +29,7 @@ namespace Mapper.Configuration
             {
                 return mapping;
             }
-            throw new InvalidOperationException(string.Format("Mapping class {0} was not found", type.Name));
+            throw new InvalidOperationException(string.Format("Mapping class {0} was not found in container", type.Name));
         }
 
         public bool IsMappingExists(Type type)
