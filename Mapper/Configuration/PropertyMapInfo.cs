@@ -3,7 +3,7 @@ using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
-    internal sealed class PropertyMapInfo<T> :  IPropertyMapInfo //where T:class
+    internal sealed class PropertyMapInfo<T> :  IPropertyMapInfo 
     {
         public Func<T, object> Getter { get; set; }
 
