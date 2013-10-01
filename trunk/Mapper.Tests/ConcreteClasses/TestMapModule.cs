@@ -8,6 +8,7 @@ namespace Mapper.Tests.ConcreteClasses
         {
             Register<Person, PersonMap>();
             Register<Address, AddressMap>();
+            Register<JobInfo, JobInfoMap>();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Mapper
         private readonly IMapperRegistry _mapperRegistry;
         private readonly IObjectStorageFactory _objectStorageFactory;
 
-        public ClassMapper(IMapContainer mapContainer, 
+        public ClassMapper(IMapContainer mapContainer,
                            IObjectStorageFactory objectStorageFactory,
                            IMapperRegistry mapperRegistry)
         {
@@ -33,8 +33,8 @@ namespace Mapper
         public IObjectStorage Store(object objectToStore)
         {
             Check.NotNull(objectToStore, "objectToStore");
-            var classMap = _mapContainer.GetMappingFor(objectToStore.GetType());
-            var objectStorage = _objectStorageFactory.Create();
+            IClassMap classMap = _mapContainer.GetMappingFor(objectToStore.GetType());
+            IObjectStorage objectStorage = _objectStorageFactory.Create();
 
             foreach (var propInfo in classMap.Mappings)
             {
@@ -54,6 +54,7 @@ namespace Mapper
 
             IClassMap classMap = _mapContainer.GetMappingFor(type);
             object restoredObject = classMap.Instance;
+
             foreach (var data in storage.Data)
             {
                 if (!classMap.IsMappingForPropertyExist(data.Key))

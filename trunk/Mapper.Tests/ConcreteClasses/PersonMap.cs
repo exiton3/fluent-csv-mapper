@@ -14,7 +14,6 @@ namespace Mapper.Tests.ConcreteClasses
             MapAsReference(x => x.Address, "Address");
             Map(x => x.Gender, "Gender").UseTypeConverter<EnumToIntConverter<Gender>>();
             MapNullable(x => x.JobInfo, "JobInfo");
-
         }
     }
 }

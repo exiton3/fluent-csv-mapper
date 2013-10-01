@@ -2,7 +2,7 @@ using Mapper.Configuration;
 
 namespace Mapper.Mappers
 {
-    class NullableMapper : IMapper
+    internal class NullableMapper : IMapper
     {
         public object Store(IPropertyMapInfo propertyMapInfo, object objectToStore, IClassMapper classMapper)
         {

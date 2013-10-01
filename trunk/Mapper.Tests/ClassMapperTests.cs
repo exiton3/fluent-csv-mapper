@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mapper.Helpers;
 using Mapper.Mappers;
 using Mapper.Tests.ConcreteClasses;
 using NUnit.Framework;
@@ -101,6 +102,8 @@ namespace Mapper.Tests
             Assert.That(person.Address.Street, Is.EqualTo("some"));
         }
 
+        
+
         [Test]
         public void StoreEnumPropertyInStorageTypeAccordingToMapping()
         {
@@ -148,6 +151,26 @@ namespace Mapper.Tests
             Assert.That(storage.GetData("House"), Is.EqualTo(123));
         }
 
+        [Test]
+        [Ignore("Skip until fix strcut types")]
+        public void RestoreNullableProperty()
+        {
+            var storage = new ObjectStorage();
+            var objectStorage = new ObjectStorage();
+            objectStorage["Position"] = "some";
+            objectStorage["Salary"] = 123.0;
+            storage["JobInfo"] = objectStorage;
+
+            var restoredObject = _classMapper.Restore(typeof(Person), storage);
+
+            Assert.That(restoredObject, Is.InstanceOf<Person>());
+
+            var person = restoredObject as Person;
+
+            Assert.That(person.JobInfo.Value.Salary, Is.EqualTo(123));
+            Assert.That(person.JobInfo.Value.Position, Is.EqualTo("some"));
+        }
+
 
         [Test]
         public void StoreNullableProperty()
@@ -155,12 +178,24 @@ namespace Mapper.Tests
             var jobInfo = new JobInfo {Position = "Developer", Salary = 1000};
             var person = MakePerson(x => x.JobInfo = jobInfo);
 
-            var dvt = _classMapper.Store(person);
+            var objectStorage = _classMapper.Store(person);
 
-            var storage = dvt.GetData("JobInfo") as IObjectStorage;
+            var storage = objectStorage.GetData("JobInfo") as IObjectStorage;
             Assert.That(storage, Is.Not.Null);
             Assert.That(storage.GetData("Position"), Is.EqualTo("Developer"));
             Assert.That(storage.GetData("Salary"), Is.EqualTo(1000));
+        }
+
+        [Test]
+        public void StoreNullablePropertyIfValueIsNull()
+        {
+            var jobInfo = new JobInfo { Position = "Developer", Salary = 1000 };
+            var person = MakePerson(x => x.JobInfo = null);
+
+            var dvt = _classMapper.Store(person);
+
+            var storage = dvt.GetData("JobInfo") as IObjectStorage;
+            Assert.That(storage, Is.Null);
         }
 
         [Test]
@@ -240,5 +275,6 @@ namespace Mapper.Tests
             addressDynamic["House"] = 123;
             return storage;
         }
+
     }
 }

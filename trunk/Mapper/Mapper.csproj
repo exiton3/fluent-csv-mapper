@@ -43,6 +43,7 @@
     <Compile Include="Converters\ValueFormatter.cs" />
     <Compile Include="Converters\EnumToIntConverter.cs" />
     <Compile Include="Helpers\Check.cs" />
+    <Compile Include="Helpers\TypeHelper.cs" />
     <Compile Include="IObjectStorageFactory.cs" />
     <Compile Include="Configuration\MapContainer.cs" />
     <Compile Include="Configuration\MapModule.cs" />
