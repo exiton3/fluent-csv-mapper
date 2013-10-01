@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mapper.Mappers;
 using Mapper.Tests.ConcreteClasses;
 using NUnit.Framework;
 
@@ -25,7 +26,7 @@ namespace Mapper.Tests
                 Console.WriteLine("Factory created");
             }
 
-            return new ClassMapper(_mapMapModule, new ObjectStorageFactory());
+            return new ClassMapper(_mapMapModule, new ObjectStorageFactory(),new MapperRegistry());
         }
 
         private static Person MakePerson(Action<Person> action)
