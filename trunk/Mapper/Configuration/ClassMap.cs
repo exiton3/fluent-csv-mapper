@@ -11,11 +11,7 @@ namespace Mapper.Configuration
 
         private PropertyMapOptions<T> _propertyMapOptions;
 
-        protected ClassMap()
-        {
-            Instance = new T();
-        }
-        public object Instance { get; private set; }
+        public object Instance { get { return new T(); } }
 
         public Dictionary<string, IPropertyMapInfo> Mappings
         {
@@ -59,7 +55,7 @@ namespace Mapper.Configuration
         protected void MapNullable<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
             var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Nullable);
-            propInfo.PropertyType = typeof (TValue).GetGenericArguments()[0];
+            propInfo.PropertyType = typeof (TValue);
             _mappings.Add(name, propInfo);
         }
 

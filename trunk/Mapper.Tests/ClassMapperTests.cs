@@ -171,6 +171,22 @@ namespace Mapper.Tests
             Assert.That(person.JobInfo.Value.Position, Is.EqualTo("some"));
         }
 
+        [Test]
+        public void RestoreNullablePropertyIfValueIsNull()
+        {
+            var storage = new ObjectStorage();
+            
+            storage["JobInfo"] = null;
+
+            var restoredObject = _classMapper.Restore(typeof(Person), storage);
+
+            Assert.That(restoredObject, Is.InstanceOf<Person>());
+
+            var person = restoredObject as Person;
+
+            Assert.That(person.JobInfo.HasValue, Is.False);
+        }
+
 
         [Test]
         public void StoreNullableProperty()
@@ -261,7 +277,11 @@ namespace Mapper.Tests
             var department = (Department) restoredObject;
 
             Assert.That(department.Persons.Count, Is.EqualTo(2));
+            Assert.That(department.Persons[0].Name,Is.EqualTo("First"));
+            Assert.That(department.Persons[1].Name,Is.EqualTo("Second"));
         }
+
+
 
         private static ObjectStorage MakePersonObjectStorage(string name)
         {
