@@ -16,6 +16,10 @@ namespace Mapper.Mappers
 
         public object Restore(IPropertyMapInfo mapping, object value, IClassMapper classMapper)
         {
+            if (value == null)
+            {
+                return null;
+            }
             return classMapper.Restore(mapping.PropertyType, value as IObjectStorage);
         }
 
