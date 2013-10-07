@@ -13,7 +13,7 @@ namespace Mapper.Tests.ConcreteClasses
             Map(x => x.Numbers, "Phones");
             MapAsReference(x => x.Address, "Address");
             Map(x => x.Gender, "Gender").UseTypeConverter<EnumToIntConverter<Gender>>();
-            MapNullable(x => x.JobInfo, "JobInfo");
+            MapAsNullable(x => x.JobInfo, "JobInfo");
         }
     }
 }
