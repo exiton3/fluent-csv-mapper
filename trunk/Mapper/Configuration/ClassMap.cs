@@ -52,7 +52,7 @@ namespace Mapper.Configuration
             _mappings.Add(name, propInfo);
         }
 
-        protected void MapNullable<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
+        protected void MapAsNullable<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
             var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Nullable);
             propInfo.PropertyType = typeof (TValue);
