@@ -61,6 +61,7 @@
     <Compile Include="ConcreteClasses\Person.cs" />
     <Compile Include="ConcreteClasses\PersonMap.cs" />
     <Compile Include="MapContainerTests.cs" />
+    <Compile Include="Mappers\MapperRegistryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
