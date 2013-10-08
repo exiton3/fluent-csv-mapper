@@ -61,12 +61,23 @@ namespace Mapper.Configuration
 
         protected void MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
-            var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Collection);
+            var collectionType = typeof(TValue);
+            var propertyKind = GetPropertyKind(collectionType);
 
-            var collectionType = typeof (TValue);
-            var genericArguments = collectionType.GetGenericArguments();
-            propInfo.PropertyType = genericArguments[0];
+            var propInfo = CreatePropertyMapInfo(getterExpression, propertyKind);
+
+            propInfo.PropertyType = TypeHelper.GetCollectionElementType(collectionType);
             _mappings.Add(name, propInfo);
+        }
+
+        private static PropertyKind GetPropertyKind(Type collectionType)
+        {
+            var propertyKind = PropertyKind.Collection;
+            if (collectionType.IsArray)
+            {
+                propertyKind = PropertyKind.Array;
+            }
+            return propertyKind;
         }
 
 

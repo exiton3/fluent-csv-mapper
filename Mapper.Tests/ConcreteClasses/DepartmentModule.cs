@@ -6,7 +6,7 @@ namespace Mapper.Tests.ConcreteClasses
     {
         public DepartmentModule()
         {
-            Register<Department, DepartamentMap>();
+            Register<Department, DepartmentMap>();
         }
        
     }

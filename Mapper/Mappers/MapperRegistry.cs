@@ -8,8 +8,15 @@ namespace Mapper.Mappers
 
        public MapperRegistry()
        {
-           _mappers = new List<IMapper> { new ValueMapper(), new ReferenceMapper(), new CollectionMapper(), new NullableMapper() };
-           
+           _mappers = new List<IMapper>
+               {
+                   new ValueMapper(),
+                   new ReferenceMapper(),
+                   new CollectionMapper(),
+                   new NullableMapper(),
+                   new ArrayMapper()
+               };
+
        }
         public IEnumerable<IMapper> GetAllMappers()
         {

@@ -5,6 +5,7 @@ namespace Mapper.Configuration
         Value,
         Reference,
         Collection,
-        Nullable
+        Nullable,
+        Array
     }
 }

@@ -2,11 +2,12 @@ using Mapper.Configuration;
 
 namespace Mapper.Tests.ConcreteClasses
 {
-    class DepartamentMap:ClassMap<Department>
+    class DepartmentMap:ClassMap<Department>
     {
-        public DepartamentMap()
+        public DepartmentMap()
         {
             MapAsCollection(x => x.Persons, "Persons");
+            MapAsCollection(x => x.Persons2, "PersonsArray");
         } 
     }
 }
