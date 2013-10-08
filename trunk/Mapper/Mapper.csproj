@@ -58,6 +58,7 @@
     <Compile Include="Converters\IValueFormatter.cs" />
     <Compile Include="Configuration\ClassMap.cs" />
     <Compile Include="ClassMapper.cs" />
+    <Compile Include="Mappers\ArrayMapper.cs" />
     <Compile Include="Mappers\CollectionMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\IMapperRegistry.cs" />

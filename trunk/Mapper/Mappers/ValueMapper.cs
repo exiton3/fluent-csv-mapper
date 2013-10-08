@@ -4,10 +4,6 @@ namespace Mapper.Mappers
 {
     internal class ValueMapper : IMapper
     {
-        public ValueMapper()
-        {
-            
-        }
         public object Store(IPropertyMapInfo propInfo, object objectToStore, IClassMapper classMapper)
         {
             object getterValue = propInfo.Getter(objectToStore);

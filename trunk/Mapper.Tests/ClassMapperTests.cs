@@ -282,6 +282,51 @@ namespace Mapper.Tests
         }
 
 
+        [Test]
+        public void RestoreArrayPropertyFromStorage()
+        {
+            var storage = new ObjectStorage();
+            var objectStorages = new List<IObjectStorage>
+                {
+                    MakePersonObjectStorage("First"),
+                    MakePersonObjectStorage("Second"),
+                };
+            storage["PersonsArray"] = objectStorages.ToArray();
+
+            var restoredObject = _classMapper.Restore(typeof(Department), storage);
+
+            Assert.That(restoredObject, Is.InstanceOf<Department>());
+            var department = (Department)restoredObject;
+
+            Assert.That(department.Persons2.Length, Is.EqualTo(2));
+            Assert.That(department.Persons2[0].Name, Is.EqualTo("First"));
+            Assert.That(department.Persons2[1].Name, Is.EqualTo("Second"));
+        }
+
+        [Test]
+        public void StoreArrayProperty()
+        {
+            var department = new Department
+            {
+                Persons2 = new List<Person>
+                        {
+                            MakePerson(x=>x.Name = "First"),
+                            MakePerson(x=>x.Name = "Second")
+                        }.ToArray()
+            };
+
+            var objectStorage = _classMapper.Store(department);
+
+            var data = objectStorage.GetData("PersonsArray");
+
+            Assert.That(data, Is.InstanceOf<List<IObjectStorage>>());
+
+            var first = ((List<IObjectStorage>)data)[0];
+            var second = ((List<IObjectStorage>)data)[1];
+
+            Assert.That("First", Is.EqualTo(first.GetData("Name")));
+            Assert.That("Second", Is.EqualTo(second.GetData("Name")));
+        }
 
         private static ObjectStorage MakePersonObjectStorage(string name)
         {

@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Mapper.Configuration;
 
 namespace Mapper.Mappers
 {
-    class CollectionMapper : IMapper
+    class ArrayMapper : IMapper
     {
         public object Store(IPropertyMapInfo propertyMapInfo, object objectToStore, IClassMapper classMapper)
         {
@@ -13,7 +14,7 @@ namespace Mapper.Mappers
             var objectStorages = new List<IObjectStorage>();
             if (getterValue != null)
             {
-                foreach (var obj in (IEnumerable)getterValue)
+                foreach (var obj in (IEnumerable) getterValue)
                 {
                     var storage = classMapper.Store(obj);
                     objectStorages.Add(storage);
@@ -24,20 +25,21 @@ namespace Mapper.Mappers
 
         public object Restore(IPropertyMapInfo mapping, object value, IClassMapper classMapper)
         {
-            var collectionType = typeof(List<>);
-            var genericType = collectionType.MakeGenericType(mapping.PropertyType);
-            var objectList = (IList)Activator.CreateInstance(genericType);
-            foreach (var storageItem in value as IEnumerable)
+            var sourceValues = ((IEnumerable) value?? new IObjectStorage[0]).Cast<IObjectStorage>().ToList();
+            var array = Array.CreateInstance(mapping.PropertyType, sourceValues.Count);
+            int i = 0;
+            foreach (var storageItem in sourceValues)
             {
-                var restoredItem = classMapper.Restore(mapping.PropertyType, (IObjectStorage)storageItem);
-                objectList.Add(restoredItem);
+                var restoredItem = classMapper.Restore(mapping.PropertyType, storageItem);
+                array.SetValue(restoredItem, i);
+                i++;
             }
-            return objectList;
+            return array;
         }
 
         public bool IsMatch(IPropertyMapInfo propertyMapInfo)
         {
-            return propertyMapInfo.PropertyKind == PropertyKind.Collection;
+            return propertyMapInfo.PropertyKind == PropertyKind.Array;
         }
     }
 }
