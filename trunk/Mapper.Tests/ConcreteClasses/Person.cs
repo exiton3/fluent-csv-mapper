@@ -9,7 +9,7 @@ namespace Mapper.Tests.ConcreteClasses
         {
             Numbers = new List<int>();
         }
-        public string Name { get; set; }
+        public string Name { get;  set; }
         public int Age { get; set; }
         public DateTime DoB { get; set; }
         public List<int> Numbers { get; set; }

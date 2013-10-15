@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using Mapper.Configuration;
 using Mapper.Mappers;
+using Moq;
 using NUnit.Framework;
 
 namespace Mapper.Tests.Mappers
@@ -16,6 +18,19 @@ namespace Mapper.Tests.Mappers
             IMapper second = mapperRegistry.GetAllMappers().First();
 
             Assert.That(first, Is.EqualTo(second));
+        }
+
+        [Test]
+        public void GetMapperByPropertyInfo()
+        {
+            var mapperRegistry = new MapperRegistry();
+
+            var propertyMapInfo = new Mock<IPropertyMapInfo>();
+            propertyMapInfo.Setup(x => x.PropertyKind).Returns(PropertyKind.Array);
+
+            IMapper  mapper = mapperRegistry.GetMapper(propertyMapInfo.Object);
+
+            Assert.That(mapper,Is.InstanceOf<ArrayMapper>());
         }
     }
 }

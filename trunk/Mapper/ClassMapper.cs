@@ -38,7 +38,7 @@ namespace Mapper
 
             foreach (var propInfo in classMap.Mappings)
             {
-                IMapper mapper = _mapperRegistry.GetAllMappers().First(x => x.IsMatch(propInfo.Value));
+                IMapper mapper = _mapperRegistry.GetMapper(propInfo.Value);
 
                 object o = mapper.Store(propInfo.Value, objectToStore, this);
                 objectStorage.SetData(propInfo.Key, o);
@@ -63,9 +63,17 @@ namespace Mapper
                 }
                 IPropertyMapInfo mapping = classMap.GetMapping(data.Key);
                 object value = data.Value;
-                IMapper mapper = _mapperRegistry.GetAllMappers().First(x => x.IsMatch(mapping));
+                IMapper mapper = _mapperRegistry.GetMapper(mapping);
                 object obj = mapper.Restore(mapping, value, this);
-                mapping.Setter(restoredObject, obj);
+
+                try
+                {
+                    mapping.Setter(restoredObject, obj);
+                }
+                catch (Exception e)
+                {
+                    throw new MapperMappingException(string.Format("Cannot set property {0}", data.Key), e);
+                }
             }
 
             return restoredObject;
