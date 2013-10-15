@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Mapper.Configuration;
 
 namespace Mapper.Mappers
 {
@@ -22,5 +24,10 @@ namespace Mapper.Mappers
         {
             return _mappers;
         }
+
+       public IMapper GetMapper(IPropertyMapInfo propertyMapInfo)
+       {
+          return _mappers.First(x => x.IsMatch(propertyMapInfo));
+       }
     }
 }
