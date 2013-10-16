@@ -328,6 +328,24 @@ namespace Mapper.Tests
             Assert.That("Second", Is.EqualTo(second.GetData("Name")));
         }
 
+        [Test]
+        public void TestTwoTimesStore()
+        {
+            var storage = new ObjectStorage();
+            storage["Name"] = "Bill";
+
+            var storage2 = new ObjectStorage();
+            storage2["Name"] = "Second";
+
+            var person = _classMapper.Restore(typeof(Person), storage) as Person;
+            var person2 = _classMapper.Restore(typeof(Person), storage2) as Person;
+
+            Assert.That(person, Is.Not.Null);
+            Assert.That(person.Name, Is.EqualTo("Bill"));
+            Assert.That(person2, Is.Not.Null);
+            Assert.That(person2.Name, Is.EqualTo("Second"));
+        }
+
         private static ObjectStorage MakePersonObjectStorage(string name)
         {
             var storage = new ObjectStorage();

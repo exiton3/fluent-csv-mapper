@@ -11,7 +11,10 @@ namespace Mapper.Configuration
 
         private PropertyMapOptions<T> _propertyMapOptions;
 
-        public object Instance { get { return new T(); } }
+        public object Instance
+        {
+            get { return new T(); }
+        }
 
         public Dictionary<string, IPropertyMapInfo> Mappings
         {
@@ -61,7 +64,7 @@ namespace Mapper.Configuration
 
         protected void MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
-            var collectionType = typeof(TValue);
+            var collectionType = typeof (TValue);
             var propertyKind = GetPropertyKind(collectionType);
 
             var propInfo = CreatePropertyMapInfo(getterExpression, propertyKind);
@@ -81,13 +84,12 @@ namespace Mapper.Configuration
         }
 
 
-        private PropertyMapInfo<T> CreatePropertyMapInfo<TValue>(Expression<Func<T, TValue>> getterExpression,
-                                                                 PropertyKind propertyKind)
+        private PropertyMapInfo<T> CreatePropertyMapInfo<TValue>(Expression<Func<T, TValue>> getterExpression, PropertyKind propertyKind)
         {
-            var setter =
-                new Action<T, object>(
-                    (o, v) => PropertyExpressionHelper.InitializeSetter(getterExpression)(o, (TValue) v));
-            var getter = new Func<T, object>(o => PropertyExpressionHelper.InitializeGetter(getterExpression)(o));
+            var set = PropertyExpressionHelper.InitializeSetter(getterExpression);
+            var get = PropertyExpressionHelper.InitializeGetter(getterExpression);
+            var setter = new Action<T, object>((o, v) => set(o, (TValue) v));
+            var getter = new Func<T, object>(o => get(o));
 
             var propInfo = new PropertyMapInfo<T>
                 {
