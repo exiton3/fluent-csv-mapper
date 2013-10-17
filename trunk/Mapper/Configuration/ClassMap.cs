@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Mapper.Helpers;
@@ -62,7 +63,7 @@ namespace Mapper.Configuration
             _mappings.Add(name, propInfo);
         }
 
-        protected void MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
+        protected void MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name) where TValue: IEnumerable
         {
             var collectionType = typeof (TValue);
             var propertyKind = GetPropertyKind(collectionType);
@@ -70,6 +71,13 @@ namespace Mapper.Configuration
             var propInfo = CreatePropertyMapInfo(getterExpression, propertyKind);
 
             propInfo.PropertyType = TypeHelper.GetCollectionElementType(collectionType);
+            _mappings.Add(name, propInfo);
+        }
+
+        protected void MapAsDictionary<TValue>(Expression<Func<T, TValue>> getterExpression, string name) where TValue: IDictionary
+        {
+            var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Dictionary);
+            propInfo.PropertyType = typeof(TValue);
             _mappings.Add(name, propInfo);
         }
 

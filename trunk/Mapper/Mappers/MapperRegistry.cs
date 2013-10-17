@@ -16,7 +16,8 @@ namespace Mapper.Mappers
                    new ReferenceMapper(),
                    new CollectionMapper(),
                    new NullableMapper(),
-                   new ArrayMapper()
+                   new ArrayMapper(),
+                   new DictionaryMapper()
                };
 
        }

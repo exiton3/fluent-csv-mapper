@@ -346,6 +346,59 @@ namespace Mapper.Tests
             Assert.That(person2.Name, Is.EqualTo("Second"));
         }
 
+        [Test]
+        public void StoreDictionaryProperty()
+        {
+            var department = new Department
+            {
+                PersonsPerGroup = new Dictionary<string, Person>
+                        {
+                           {"Group1", MakePerson(x=>x.Name = "First")},
+                           {"Group2", MakePerson(x=>x.Name = "Second")}
+                        }
+            };
+
+            var objectStorage = _classMapper.Store(department);
+
+            var data = objectStorage.GetData("PersonsPerGroup");
+
+            Assert.That(data, Is.InstanceOf<Dictionary<string, IObjectStorage>>());
+            var dict = (Dictionary<string, IObjectStorage>) data;
+
+            var first = dict["Group1"];
+            var second = dict["Group2"];
+
+            Assert.That(first.GetData("Name"), Is.EqualTo("First"));
+            Assert.That(second.GetData("Name"), Is.EqualTo("Second"));
+        }
+
+        [Test]
+        public void RestoreDictionaryProperty()
+        {
+            var storage1 = new ObjectStorage();
+            storage1["Name"] = "First";
+
+            var storage2 = new ObjectStorage();
+            storage2["Name"] = "Second";
+            var storage = new ObjectStorage();
+
+            var dict = new Dictionary<string, IObjectStorage>
+                {
+                    {"Group1", storage1},
+                    {"Group2", storage2}
+                };
+
+            storage["PersonsPerGroup"] = dict;
+
+            var restored = _classMapper.Restore(typeof (Department), storage);
+
+            Assert.That(restored,Is.Not.Null);
+            var department = (Department) restored;
+
+            Assert.That(department.PersonsPerGroup.Count, Is.EqualTo(2));
+
+        }
+
         private static ObjectStorage MakePersonObjectStorage(string name)
         {
             var storage = new ObjectStorage();

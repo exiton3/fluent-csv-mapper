@@ -17,5 +17,15 @@ namespace Mapper.Helpers
             }
             return collectionType.GetGenericArguments()[0];
         }
+
+        public static Type GetDictionaryValueType(Type type)
+        {
+            return type.GetGenericArguments()[1];
+        }
+
+        public static Type GetDictionaryKeyType(Type type)
+        {
+            return type.GetGenericArguments()[0];
+        }
     }
 }

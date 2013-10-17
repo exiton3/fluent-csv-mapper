@@ -8,6 +8,7 @@ namespace Mapper.Tests.ConcreteClasses
         {
             MapAsCollection(x => x.Persons, "Persons");
             MapAsCollection(x => x.Persons2, "PersonsArray");
+            MapAsDictionary(x => x.PersonsPerGroup, "PersonsPerGroup");
         } 
     }
 }

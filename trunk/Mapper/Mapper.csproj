@@ -60,6 +60,7 @@
     <Compile Include="ClassMapper.cs" />
     <Compile Include="Mappers\ArrayMapper.cs" />
     <Compile Include="Mappers\CollectionMapper.cs" />
+    <Compile Include="Mappers\DictionaryMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\IMapperRegistry.cs" />
     <Compile Include="Mappers\MapperRegistry.cs" />
