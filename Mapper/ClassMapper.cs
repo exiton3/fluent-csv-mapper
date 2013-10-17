@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Mapper.Configuration;
 using Mapper.Helpers;
 using Mapper.Mappers;
