@@ -128,7 +128,7 @@ namespace Mapper.Tests
         public void StoreInstanceInDynamicVariantTypeAccordingToMapping()
         {
             var numbers = new List<int> {1, 2, 3, 4, 5};
-            var person = MakePerson(x=> x.Numbers = numbers);
+            var person = MakePerson(x=> x.Numbers.AddRange(numbers));
 
             var dvt = _classMapper.Store(person);
 
@@ -138,10 +138,22 @@ namespace Mapper.Tests
         }
 
         [Test]
+        public void RestoreNonpublicProperty()
+        {
+            var numbers = new List<int> { 1, 2, 3, 4, 5 };
+            var storage = new ObjectStorage();
+            storage["Phones"] = numbers;
+
+            var restored = _classMapper.Restore(typeof(Person),storage) as Person;
+
+            Assert.That(restored.Numbers, Is.EqualTo(numbers));
+        }
+
+        [Test]
         public void StorePropertyUsingFormatterStorageAccordingToMapping()
         {
             var dateTime = new DateTime(1234, 2, 1);
-            var person = MakePerson(x=>x.DoB = dateTime);
+            var person = MakePerson(x => x.DoB = dateTime);
             var dvt = _classMapper.Store(person);
 
             Assert.That(dvt.GetData("DoB"), Is.EqualTo(dateTime.ToShortDateString()));

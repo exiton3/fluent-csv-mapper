@@ -22,7 +22,7 @@ namespace Mapper.Helpers
             var parameter = Expression.Parameter(typeof (TProperty), "param");
 
             return Expression.Lambda<Action<TContainer, TProperty>>(
-                Expression.Call(instance, propertyInfo.GetSetMethod(), parameter),
+                Expression.Call(instance, propertyInfo.GetSetMethod(true), parameter),
                 new[] {instance, parameter}).Compile();
         }
     }
