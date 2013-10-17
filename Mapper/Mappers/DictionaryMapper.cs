@@ -22,8 +22,8 @@ namespace Mapper.Mappers
 
             if (getterValue != null)
             {
-                var enumerable = getterValue as IEnumerable;
-                var source = enumerable;
+                var source = getterValue as IEnumerable;
+
                 foreach (object keyValuePair in source)
                 {
                     var sourceKey = sourceDictionaryType.GetProperty("Key").GetValue(keyValuePair, new object[0]);

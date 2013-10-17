@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mapper.Helpers;
 using Mapper.Mappers;
 using Mapper.Tests.ConcreteClasses;
 using NUnit.Framework;
-
+/*
+ * Task for Mapper
+1.[+] Support Array create ArrayMapper
+2. Support struct or converter for reference types
+3.[+] Support Dictionary<TKey,TContanier> => Dictionary<TKey,IObjectStorage>
+4. Impove performance of late resolving mappers
+5. Add checking in ClassMap of parameters types
+6. Use lamda expression to create instances of types 
+7. Create Generic extension methods for Mapping
+8. Performance tests
+//Example of reusing ClassMap
+ */
 namespace Mapper.Tests
 {
     [TestFixture]
