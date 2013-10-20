@@ -404,7 +404,7 @@ namespace Mapper.Tests
             storage2["Name"] = "Second";
             var storage = new ObjectStorage();
 
-            var dict = new Dictionary<string, IObjectStorage>
+            var dict = new Dictionary<string, ObjectStorage>
                 {
                     {"Group1", storage1},
                     {"Group2", storage2}

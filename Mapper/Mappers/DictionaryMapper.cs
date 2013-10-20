@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Mapper.Configuration;
 using Mapper.Helpers;
 
@@ -45,13 +46,15 @@ namespace Mapper.Mappers
 
             var source = ((IEnumerable) value ?? new Dictionary<string, IObjectStorage>());
 
-            var sourceDict = (Dictionary<string, IObjectStorage>) source;
-
-            foreach (var storageItem in sourceDict)
+            var sourceDict = (IDictionary) source;
+            int i = 0;
+            var keys = sourceDict.Keys.Cast<object>().ToList();
+            var values = sourceDict.Values.Cast<IObjectStorage>().ToList();
+            foreach (var key in keys)
             {
-                var restoredItem = classMapper.Restore(valueType, storageItem.Value);
-
-                dictType.GetMethod("Add").Invoke(destinationDict,  new[]{ storageItem.Key, restoredItem});
+                var restoredItem = classMapper.Restore(valueType, values[i]);
+                dictType.GetMethod("Add").Invoke(destinationDict,  new[]{ key, restoredItem});
+                i++;
             }
             return destinationDict;
         }
