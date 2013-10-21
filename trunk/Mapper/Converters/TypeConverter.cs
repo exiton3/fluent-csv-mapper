@@ -1,3 +1,5 @@
+using System;
+
 namespace Mapper.Converters
 {
     public abstract class TypeConverter<TSource, TDestination> : ITypeConverter
@@ -11,6 +13,9 @@ namespace Mapper.Converters
         {
             return ConvertBack((TDestination) value);
         }
+
+        public Type SourceType { get { return typeof (TSource); } }
+        public Type DestinationType { get { return typeof (TDestination); } }
 
         protected abstract TDestination Convert(TSource source);
         protected abstract TSource ConvertBack(TDestination source);

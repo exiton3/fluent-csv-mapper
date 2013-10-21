@@ -55,6 +55,8 @@
     <Compile Include="ConcreteClasses\DepartmentModule.cs" />
     <Compile Include="ConcreteClasses\Gender.cs" />
     <Compile Include="ConcreteClasses\JobInfo.cs" />
+    <Compile Include="ConcreteClasses\JobInfoClass.cs" />
+    <Compile Include="ConcreteClasses\JobInfoConverter.cs" />
     <Compile Include="ConcreteClasses\JobInfoMap.cs" />
     <Compile Include="ConcreteClasses\ObjectStorage.cs" />
     <Compile Include="ConcreteClasses\ObjectStorageFactory.cs" />

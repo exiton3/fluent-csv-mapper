@@ -5,14 +5,12 @@ using Mapper.Tests.ConcreteClasses;
 using NUnit.Framework;
 /*
  * Task for Mapper
-1.[+] Support Array create ArrayMapper
-2. Support struct or converter for reference types
-3.[+] Support Dictionary<TKey,TContanier> => Dictionary<TKey,IObjectStorage>
 4. Impove performance of late resolving mappers
 5. Add checking in ClassMap of parameters types
 6. Use lamda expression to create instances of types 
 7. Create Generic extension methods for Mapping
 8. Performance tests
+ * 9. Support inheritance of objects
 //Example of reusing ClassMap
  */
 namespace Mapper.Tests
@@ -189,52 +187,23 @@ namespace Mapper.Tests
 
             var person = restoredObject as Person;
 
-            Assert.That(person.JobInfo.Value.Salary, Is.EqualTo(123));
-            Assert.That(person.JobInfo.Value.Position, Is.EqualTo("some"));
+            Assert.That(person.JobInfo.Salary, Is.EqualTo(123));
+            Assert.That(person.JobInfo.Position, Is.EqualTo("some"));
         }
 
-        [Test]
-        public void RestoreNullablePropertyIfValueIsNull()
-        {
-            var storage = new ObjectStorage();
-            
-            storage["JobInfo"] = null;
+        //[Test]
+        //public void StoreNullableProperty()
+        //{
+        //    var jobInfo = new JobInfo { Position = "Developer", Salary = 1000 };
+        //    var person = MakePerson(x => x.JobInfoNull = jobInfo);
 
-            var restoredObject = _classMapper.Restore(typeof(Person), storage);
+        //    var objectStorage = _classMapper.Store(person);
 
-            Assert.That(restoredObject, Is.InstanceOf<Person>());
-
-            var person = restoredObject as Person;
-
-            Assert.That(person.JobInfo.HasValue, Is.False);
-        }
-
-
-        [Test]
-        public void StoreNullableProperty()
-        {
-            var jobInfo = new JobInfo {Position = "Developer", Salary = 1000};
-            var person = MakePerson(x => x.JobInfo = jobInfo);
-
-            var objectStorage = _classMapper.Store(person);
-
-            var storage = objectStorage.GetData("JobInfo") as IObjectStorage;
-            Assert.That(storage, Is.Not.Null);
-            Assert.That(storage.GetData("Position"), Is.EqualTo("Developer"));
-            Assert.That(storage.GetData("Salary"), Is.EqualTo(1000));
-        }
-
-        [Test]
-        public void StoreNullablePropertyIfValueIsNull()
-        {
-            var jobInfo = new JobInfo { Position = "Developer", Salary = 1000 };
-            var person = MakePerson(x => x.JobInfo = null);
-
-            var dvt = _classMapper.Store(person);
-
-            var storage = dvt.GetData("JobInfo") as IObjectStorage;
-            Assert.That(storage, Is.Null);
-        }
+        //    var storage = objectStorage.GetData("JobInfo") as IObjectStorage;
+        //    Assert.That(storage, Is.Not.Null);
+        //    Assert.That(storage.GetData("Position"), Is.EqualTo("Developer"));
+        //    Assert.That(storage.GetData("Salary"), Is.EqualTo(1000));
+        //}
 
         [Test]
         public void ThorwsExceptionCanMapIfArgumentNull()
@@ -419,6 +388,35 @@ namespace Mapper.Tests
 
             Assert.That(department.PersonsPerGroup.Count, Is.EqualTo(2));
 
+        }
+
+        [Test]
+        public void StoreReferencePropertyUseTypeConverter()
+        {
+            var person = MakePerson(x => x.JobInfo = new JobInfo {Salary = 123.0, Position = "Pos"});
+
+            var stored = _classMapper.Store(person);
+
+            var jobInfoStorage = stored.GetData("JobInfo") as IObjectStorage; 
+
+            Assert.That(jobInfoStorage.GetData("Position"),Is.EqualTo("PosClass"));
+            Assert.That(jobInfoStorage.GetData("Salary"),Is.EqualTo(1230.0));
+
+        }
+
+        [Test]
+        public void RestoreReferencePropertyUseTypeConverter()
+        {
+            var storage = new ObjectStorage();
+            var jobStorage = new ObjectStorage();
+            jobStorage["Position"] = "SomeClass";
+            jobStorage["Salary"] = 1230.0;
+            storage["JobInfo"] = jobStorage;
+
+            var person = _classMapper.Restore(typeof (Person), storage) as Person;
+
+            Assert.That(person.JobInfo.Position,Is.EqualTo("Some"));
+            Assert.That(person.JobInfo.Salary,Is.EqualTo(123.0));
         }
 
         private static ObjectStorage MakePersonObjectStorage(string name)
