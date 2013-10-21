@@ -49,17 +49,20 @@ namespace Mapper.Configuration
             return _propertyMapOptions;
         }
 
-        protected void MapAsReference<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
+        protected IReferencePropertyMapOptions MapAsReference<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
             var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Reference);
             propInfo.PropertyType = typeof (TValue);
+            _propertyMapOptions = new PropertyMapOptions<T>(propInfo);
             _mappings.Add(name, propInfo);
+            return _propertyMapOptions;
         }
 
         protected void MapAsNullable<TValue>(Expression<Func<T, TValue>> getterExpression, string name)
         {
             var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Nullable);
             propInfo.PropertyType = typeof (TValue);
+            
             _mappings.Add(name, propInfo);
         }
 

@@ -2,7 +2,7 @@ using Mapper.Configuration;
 
 namespace Mapper.Tests.ConcreteClasses
 {
-    class JobInfoMap : ClassMap<JobInfo>
+    class JobInfoMap : ClassMap<JobInfoClass>
     {
         public JobInfoMap()
         {

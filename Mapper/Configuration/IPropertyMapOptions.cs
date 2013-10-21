@@ -3,9 +3,8 @@ using Mapper.Helpers;
 
 namespace Mapper.Configuration
 {
-    public interface IPropertyMapOptions : IFluentSyntax
+    public interface IPropertyMapOptions : IFluentSyntax, IReferencePropertyMapOptions
     {
         void UseFormatter<TFormatter>() where TFormatter : IValueFormatter, new();
-        void UseTypeConverter<TConverter>() where TConverter : ITypeConverter, new();
     }
 }

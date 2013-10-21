@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\IMapModule.cs" />
+    <Compile Include="Configuration\IReferencePropertyMapOptions.cs" />
     <Compile Include="Configuration\MapperMappingException.cs" />
     <Compile Include="Configuration\PropertyKind.cs" />
     <Compile Include="Converters\ITypeConverter.cs" />
