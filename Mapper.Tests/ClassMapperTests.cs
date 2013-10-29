@@ -24,18 +24,19 @@ namespace Mapper.Tests
             _classMapper = CreateTranslator();
         }
 
-        private static TestMapContainer _mapMapModule;
+        private static TestMapContainer _mapContainer;
         private ClassMapper _classMapper;
 
         private static ClassMapper CreateTranslator()
         {
-            if (_mapMapModule == null)
+            if (_mapContainer == null)
             {
-                _mapMapModule = new TestMapContainer();
-                Console.WriteLine("Factory created");
+                _mapContainer = new TestMapContainer();
+                _mapContainer.Build();
+                Console.WriteLine("MapContainer created");
             }
 
-            return new ClassMapper(_mapMapModule, new ObjectStorageFactory(),new MapperRegistry());
+            return new ClassMapper(_mapContainer, new ObjectStorageFactory(),new MapperRegistry());
         }
 
         private static Person MakePerson(Action<Person> action)

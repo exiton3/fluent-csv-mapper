@@ -7,5 +7,6 @@ namespace Mapper.Configuration
         IClassMap GetMappingFor(Type type);
 
         bool IsMappingExists(Type type);
+        void Build();
     }
 }
