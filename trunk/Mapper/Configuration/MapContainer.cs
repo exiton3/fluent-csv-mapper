@@ -34,6 +34,8 @@ namespace Mapper.Configuration
 
         public void Build()
         {
+            if (_wasBuild)
+                return;
             foreach (IMapModule mapModule in _modules)
             {
                 RegisterMappings(mapModule);
