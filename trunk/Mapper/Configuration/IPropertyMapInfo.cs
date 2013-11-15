@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Mapper.Converters;
 
 namespace Mapper.Configuration
@@ -13,5 +14,8 @@ namespace Mapper.Configuration
         bool IsTypeConverterSet { get; }
         Type PropertyType { get; set; }
         PropertyKind PropertyKind { get; set; }
+        string DiscriminatorField { get; set; }
+        Dictionary<string, Type> DiscriminatorTypes { get; }
+        bool IsDiscriminatorSet { get; }
     }
 }

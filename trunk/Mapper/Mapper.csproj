@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\IInheritanceMapOptions.cs" />
     <Compile Include="Configuration\IMapModule.cs" />
     <Compile Include="Configuration\IReferencePropertyMapOptions.cs" />
     <Compile Include="Configuration\MapperMappingException.cs" />

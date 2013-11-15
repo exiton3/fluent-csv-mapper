@@ -60,14 +60,14 @@ namespace Mapper
                 {
                     continue;
                 }
-                IPropertyMapInfo mapping = classMap.GetMapping(data.Key);
+                IPropertyMapInfo propertyMapInfo = classMap.GetMapping(data.Key);
                 object value = data.Value;
-                IMapper mapper = _mapperRegistry.GetMapper(mapping);
-                object obj = mapper.Restore(mapping, value, this);
+                IMapper mapper = _mapperRegistry.GetMapper(propertyMapInfo);
+                object obj = mapper.Restore(propertyMapInfo, value, this);
 
                 try
                 {
-                    mapping.Setter(restoredObject, obj);
+                    propertyMapInfo.Setter(restoredObject, obj);
                 }
                 catch (Exception e)
                 {

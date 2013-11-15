@@ -6,7 +6,8 @@ namespace Mapper.Tests.ConcreteClasses
     {
         public TestMapModule()
         {
-            Register<Person, PersonMap>();
+            Register<Person, PersonMap<Person>>();
+            Register<Manager, ManagerMap>();
             Register<Address, AddressMap>();
             Register<JobInfoClass, JobInfoMap>();
         }

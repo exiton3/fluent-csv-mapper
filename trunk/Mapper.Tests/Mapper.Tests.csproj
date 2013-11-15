@@ -58,6 +58,8 @@
     <Compile Include="ConcreteClasses\JobInfoClass.cs" />
     <Compile Include="ConcreteClasses\JobInfoConverter.cs" />
     <Compile Include="ConcreteClasses\JobInfoMap.cs" />
+    <Compile Include="ConcreteClasses\Manager.cs" />
+    <Compile Include="ConcreteClasses\ManagerMap.cs" />
     <Compile Include="ConcreteClasses\ObjectStorage.cs" />
     <Compile Include="ConcreteClasses\ObjectStorageFactory.cs" />
     <Compile Include="ConcreteClasses\TestMapContainer.cs" />

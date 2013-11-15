@@ -29,6 +29,13 @@ namespace Mapper.Mappers
                 return mapping.TypeConverter.ConvertBack(restoredObject);
             }
 
+            if (!string.IsNullOrEmpty(mapping.DiscriminatorField))
+            {
+                var storage = value as IObjectStorage;
+                string key = storage.GetData(mapping.DiscriminatorField).ToString();
+                typeToRestore = mapping.DiscriminatorTypes[key];
+            }
+
             restoredObject = classMapper.Restore(typeToRestore, value as IObjectStorage);
             return restoredObject;
         }

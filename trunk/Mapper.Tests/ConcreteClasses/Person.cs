@@ -21,9 +21,4 @@ namespace Mapper.Tests.ConcreteClasses
         public JobInfo JobInfo { get; set; }
         public JobInfo? JobInfoNull { get; set; }
     }
-
-    class Manager : Person
-    {
-        public double Salary { get; set; }
-    }
 }
