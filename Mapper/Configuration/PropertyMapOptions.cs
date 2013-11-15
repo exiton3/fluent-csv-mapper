@@ -2,7 +2,7 @@ using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
-    internal class PropertyMapOptions<T> : IPropertyMapOptions 
+    internal class PropertyMapOptions<T> : IPropertyMapOptions,IInheritanceMapOptions 
     {
         private readonly PropertyMapInfo<T> _propertyMapInfo;
 
@@ -19,6 +19,19 @@ namespace Mapper.Configuration
         public void UseTypeConverter<TConverter>() where TConverter : ITypeConverter, new()
         {
             _propertyMapInfo.TypeConverter = new TConverter();
+        }
+
+        public IInheritanceMapOptions DiscriminateOnField(string name)
+        {
+            _propertyMapInfo.DiscriminatorField = name;
+
+            return this;
+        }
+
+        public IInheritanceMapOptions DiscriminatorValueFor<TValue>(string value) where TValue : class
+        {
+            _propertyMapInfo.DiscriminatorTypes.Add(value,typeof(TValue));
+            return this;
         }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Mapper.Configuration;
 
 namespace Mapper.Mappers
@@ -16,6 +17,11 @@ namespace Mapper.Mappers
                 foreach (var obj in (IEnumerable)getterValue)
                 {
                     var storage = classMapper.Store(obj);
+                    if (propertyMapInfo.IsDiscriminatorSet)
+                    {
+                        storage.SetData(propertyMapInfo.DiscriminatorField,
+                                        propertyMapInfo.DiscriminatorTypes.FirstOrDefault(x => x.Value == obj.GetType()));
+                    }
                     objectStorages.Add(storage);
                 }
             }
@@ -29,7 +35,15 @@ namespace Mapper.Mappers
             var objectList = (IList)Activator.CreateInstance(genericType);
             foreach (var storageItem in value as IEnumerable)
             {
-                var restoredItem = classMapper.Restore(mapping.PropertyType, (IObjectStorage)storageItem);
+                Type typeToRestore = mapping.PropertyType;
+                if (mapping.IsDiscriminatorSet)
+                {
+                    var storage = storageItem as IObjectStorage;
+                    string key = storage.GetData(mapping.DiscriminatorField).ToString();
+                      typeToRestore = mapping.DiscriminatorTypes[key];
+                }
+
+                var restoredItem = classMapper.Restore(typeToRestore, (IObjectStorage)storageItem);
                 objectList.Add(restoredItem);
             }
             return objectList;

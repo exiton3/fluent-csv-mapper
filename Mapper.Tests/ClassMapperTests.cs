@@ -420,9 +420,33 @@ namespace Mapper.Tests
             Assert.That(person.JobInfo.Salary,Is.EqualTo(123.0));
         }
 
+        [Test]
+        public void RestoreCollectionWithHierarchy()
+        {
+            var person = new ObjectStorage();
+            person["Type"] = "Person";
+            person["Name"] = "PersonName";
+
+            var manager = new ObjectStorage();
+            manager["Type"] = "Manager";
+            manager["Name"] = "ManagerName";
+            manager["Salary"] = 100.0;
+
+            var storage = new ObjectStorage();
+
+            storage["Persons"] = new List<IObjectStorage> {person, manager};
+
+            Department restored = _classMapper.Restore(typeof (Department), storage) as Department;
+
+            Assert.That(restored.Persons[0],Is.InstanceOf<Person>());
+
+            Assert.That(restored.Persons[1],Is.InstanceOf<Manager>());
+        }
+
         private static ObjectStorage MakePersonObjectStorage(string name)
         {
             var storage = new ObjectStorage();
+            storage["Type"] = "Person";
             storage["Name"] = name;
             storage["Age"] = 28;
             var dateTime = DateTime.Now;

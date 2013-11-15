@@ -6,7 +6,10 @@ namespace Mapper.Tests.ConcreteClasses
     {
         public DepartmentMap()
         {
-            MapAsCollection(x => x.Persons, "Persons");
+            MapAsCollection(x => x.Persons, "Persons")
+               .DiscriminateOnField("Type")
+               .DiscriminatorValueFor<Person>("Person")
+               .DiscriminatorValueFor<Manager>("Manager");
             MapAsCollection(x => x.Persons2, "PersonsArray");
             MapAsDictionary(x => x.PersonsPerGroup, "PersonsPerGroup");
         } 

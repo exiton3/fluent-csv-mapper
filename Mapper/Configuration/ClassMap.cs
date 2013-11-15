@@ -66,7 +66,7 @@ namespace Mapper.Configuration
             _mappings.Add(name, propInfo);
         }
 
-        protected void MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name) where TValue: IEnumerable
+        protected IInheritanceMapOptions MapAsCollection<TValue>(Expression<Func<T, TValue>> getterExpression, string name) where TValue: IEnumerable
         {
             var collectionType = typeof (TValue);
             var propertyKind = GetPropertyKind(collectionType);
@@ -74,7 +74,9 @@ namespace Mapper.Configuration
             var propInfo = CreatePropertyMapInfo(getterExpression, propertyKind);
 
             propInfo.PropertyType = TypeHelper.GetCollectionElementType(collectionType);
+            _propertyMapOptions = new PropertyMapOptions<T>(propInfo);
             _mappings.Add(name, propInfo);
+            return _propertyMapOptions;
         }
 
         protected void MapAsDictionary<TValue>(Expression<Func<T, TValue>> getterExpression, string name) where TValue: IDictionary

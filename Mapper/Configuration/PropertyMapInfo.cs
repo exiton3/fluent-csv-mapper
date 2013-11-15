@@ -1,13 +1,24 @@
 using System;
+using System.Collections.Generic;
 using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
-    internal sealed class PropertyMapInfo<T> :  IPropertyMapInfo 
+    internal sealed class PropertyMapInfo<T> : IPropertyMapInfo
     {
+        public PropertyMapInfo()
+        {
+            DiscriminatorTypes = new Dictionary<string, Type>();
+        }
+
         public Func<T, object> Getter { get; set; }
 
         public Action<T, object> Setter { get; set; }
+
+        public bool IsDiscriminatorSet
+        {
+            get { return !string.IsNullOrEmpty(DiscriminatorField); }
+        }
 
         Action<object, object> IPropertyMapInfo.Setter
         {
@@ -16,7 +27,7 @@ namespace Mapper.Configuration
 
         Func<object, object> IPropertyMapInfo.Getter
         {
-            get {return o => Getter((T)o); }
+            get { return o => Getter((T) o); }
         }
 
         public IValueFormatter ValueFormatter { get; set; }
@@ -36,6 +47,9 @@ namespace Mapper.Configuration
         }
 
         public PropertyKind PropertyKind { get; set; }
+
+        public string DiscriminatorField { get; set; }
+
+        public Dictionary<string, Type> DiscriminatorTypes { get; private set; }
     }
-    
 }

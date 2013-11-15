@@ -3,7 +3,7 @@ using Mapper.Converters;
 
 namespace Mapper.Tests.ConcreteClasses
 {
-    internal class PersonMap : ClassMap<Person>
+    internal class PersonMap<T> : ClassMap<T> where T:Person, new()
     {
         public PersonMap()
         {
