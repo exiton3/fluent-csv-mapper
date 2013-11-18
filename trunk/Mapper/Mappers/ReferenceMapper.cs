@@ -29,7 +29,7 @@ namespace Mapper.Mappers
                 return mapping.TypeConverter.ConvertBack(restoredObject);
             }
 
-            if (!string.IsNullOrEmpty(mapping.DiscriminatorField))
+            if (mapping.IsDiscriminatorSet)
             {
                 var storage = value as IObjectStorage;
                 string key = storage.GetData(mapping.DiscriminatorField).ToString();

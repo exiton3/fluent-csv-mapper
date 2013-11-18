@@ -19,8 +19,9 @@ namespace Mapper.Mappers
                     var storage = classMapper.Store(obj);
                     if (propertyMapInfo.IsDiscriminatorSet)
                     {
+                        var discriminatorType = propertyMapInfo.DiscriminatorTypes.FirstOrDefault(x => x.Value == obj.GetType());
                         storage.SetData(propertyMapInfo.DiscriminatorField,
-                                        propertyMapInfo.DiscriminatorTypes.FirstOrDefault(x => x.Value == obj.GetType()));
+                                        discriminatorType.Key);
                     }
                     objectStorages.Add(storage);
                 }
