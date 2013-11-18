@@ -4,6 +4,10 @@ namespace Mapper.Tests.ConcreteClasses
 {
     class Department
     {
+        public Department()
+        {
+            Persons = new List<Person>();
+        }
         public List<Person> Persons { get; set; } 
         public Person[] Persons2 { get; set; }
         public Dictionary<string,Person> PersonsPerGroup { get; set; }

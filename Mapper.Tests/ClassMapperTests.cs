@@ -443,6 +443,23 @@ namespace Mapper.Tests
             Assert.That(restored.Persons[1],Is.InstanceOf<Manager>());
         }
 
+        [Test]
+        public void StoreCollectionPropertyWithHierarchy()
+        {
+            var department = new Department();
+
+            department.Persons.Add(new Person{ Name = "First", Address = new Address()});
+            department.Persons.Add(new Manager {Name = "ManagerName", Address = new Address(), Salary = 123.0});
+
+            IObjectStorage objectStorage = _classMapper.Store(department);
+
+            var persons = objectStorage.GetData("Persons") as List<IObjectStorage>;
+
+            Assert.That(persons.Count, Is.EqualTo(2));
+            Assert.That(persons[0].GetData("Type"),Is.EqualTo("Person"));
+            Assert.That(persons[1].GetData("Type"),Is.EqualTo("Manager"));
+        }
+
         private static ObjectStorage MakePersonObjectStorage(string name)
         {
             var storage = new ObjectStorage();
