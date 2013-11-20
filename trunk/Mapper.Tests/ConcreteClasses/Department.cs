@@ -8,6 +8,9 @@ namespace Mapper.Tests.ConcreteClasses
         {
             Persons = new List<Person>();
         }
+
+        public Person Person { get; set; }
+
         public List<Person> Persons { get; set; } 
         public Person[] Persons2 { get; set; }
         public Dictionary<string,Person> PersonsPerGroup { get; set; }
