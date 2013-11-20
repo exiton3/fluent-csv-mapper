@@ -2,7 +2,7 @@ using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
-    internal class PropertyMapOptions<T> : IPropertyMapOptions, IInheritanceMapOptions,IDescriminateMapOptions
+    internal class PropertyMapOptions<T> : IPropertyMapOptions, IReferencePropertyMapOptions,IDescriminateMapOptions
     {
         private readonly PropertyMapInfo<T> _propertyMapInfo;
 
