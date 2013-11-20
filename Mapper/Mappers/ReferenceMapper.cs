@@ -17,23 +17,16 @@ namespace Mapper.Mappers
             return classMapper.Store(getterValue);
         }
 
-        public object Restore(IPropertyMapInfo mapping, object value, IClassMapper classMapper)
+        public object Restore(IPropertyMapInfo propertyMapInfo, object value, IClassMapper classMapper)
         {
-            Type typeToRestore = mapping.PropertyType;
+            Type typeToRestore = propertyMapInfo.PropertyType;
             object restoredObject;
-            if (mapping.IsTypeConverterSet)
+            if (propertyMapInfo.IsTypeConverterSet)
             {
-                typeToRestore = mapping.TypeConverter.DestinationType;
+                typeToRestore = propertyMapInfo.TypeConverter.DestinationType;
                 restoredObject = classMapper.Restore(typeToRestore, value as IObjectStorage);
 
-                return mapping.TypeConverter.ConvertBack(restoredObject);
-            }
-
-            if (mapping.IsDiscriminatorSet)
-            {
-                var storage = value as IObjectStorage;
-                string key = storage.GetData(mapping.DiscriminatorField).ToString();
-                typeToRestore = mapping.DiscriminatorTypes[key];
+                return propertyMapInfo.TypeConverter.ConvertBack(restoredObject);
             }
 
             restoredObject = classMapper.Restore(typeToRestore, value as IObjectStorage);

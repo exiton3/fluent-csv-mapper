@@ -20,16 +20,16 @@ namespace Mapper.Mappers
             return getterValue;
         }
 
-        public object Restore(IPropertyMapInfo mapping, object value, IClassMapper classMapper)
+        public object Restore(IPropertyMapInfo propertyMapInfo, object value, IClassMapper classMapper)
         {
-            if (mapping.IsValueFormatterSet)
+            if (propertyMapInfo.IsValueFormatterSet)
             {
-                value = mapping.ValueFormatter.Parse((string) value);
+                value = propertyMapInfo.ValueFormatter.Parse((string) value);
             }
 
-            if (mapping.IsTypeConverterSet)
+            if (propertyMapInfo.IsTypeConverterSet)
             {
-                value = mapping.TypeConverter.ConvertBack(value);
+                value = propertyMapInfo.TypeConverter.ConvertBack(value);
             }
 
             return value;

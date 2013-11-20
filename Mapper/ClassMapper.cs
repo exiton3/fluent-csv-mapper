@@ -38,8 +38,8 @@ namespace Mapper
             foreach (var propInfo in classMap.Mappings)
             {
                 IMapper mapper = _mapperRegistry.GetMapper(propInfo.Value);
+                object o = mapper.Store(propInfo.Value, objectToStore, this.GetClassMapper(propInfo.Value));
 
-                object o = mapper.Store(propInfo.Value, objectToStore, this);
                 objectStorage.SetData(propInfo.Key, o);
             }
 
@@ -63,7 +63,7 @@ namespace Mapper
                 IPropertyMapInfo propertyMapInfo = classMap.GetMapping(data.Key);
                 object value = data.Value;
                 IMapper mapper = _mapperRegistry.GetMapper(propertyMapInfo);
-                object obj = mapper.Restore(propertyMapInfo, value, this);
+                object obj = mapper.Restore(propertyMapInfo, value, this.GetClassMapper(propertyMapInfo));
 
                 try
                 {

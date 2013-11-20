@@ -37,9 +37,9 @@ namespace Mapper.Mappers
             return objectStorages;
         }
 
-        public object Restore(IPropertyMapInfo mapping, object value, IClassMapper classMapper)
+        public object Restore(IPropertyMapInfo propertyMapInfo, object value, IClassMapper classMapper)
         {
-            Type dictType = mapping.PropertyType;
+            Type dictType = propertyMapInfo.PropertyType;
             var valueType = TypeHelper.GetDictionaryValueType(dictType);
 
             var destinationDict = Activator.CreateInstance(dictType);
