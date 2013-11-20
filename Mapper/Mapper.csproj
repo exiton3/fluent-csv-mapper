@@ -35,6 +35,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\IConverterPropertyMapOptions.cs" />
+    <Compile Include="Configuration\IDescriminateMapOptions.cs" />
     <Compile Include="Configuration\IInheritanceMapOptions.cs" />
     <Compile Include="Configuration\IMapModule.cs" />
     <Compile Include="Configuration\IReferencePropertyMapOptions.cs" />

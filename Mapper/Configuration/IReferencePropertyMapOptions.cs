@@ -1,9 +1,6 @@
-using Mapper.Converters;
-
 namespace Mapper.Configuration
 {
-    public interface IReferencePropertyMapOptions
+    public interface IReferencePropertyMapOptions : IConverterPropertyMapOptions, IInheritanceMapOptions
     {
-        void UseTypeConverter<TConverter>() where TConverter : ITypeConverter, new();
     }
 }

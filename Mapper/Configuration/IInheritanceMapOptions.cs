@@ -1,8 +1,7 @@
 namespace Mapper.Configuration
 {
-    public interface IInheritanceMapOptions
+    public interface IInheritanceMapOptions 
     {
-        IInheritanceMapOptions DiscriminateOnField(string name);
-        IInheritanceMapOptions DiscriminatorValueFor<T>(string value) where T : class;
+        IDescriminateMapOptions DiscriminateOnField(string name);
     }
 }
