@@ -65,6 +65,9 @@
     <Compile Include="Mappers\DictionaryMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\IMapperRegistry.cs" />
+    <Compile Include="Mappers\InheritanceClassMapper.cs" />
+    <Compile Include="Mappers\IObjectMappingStrategy.cs" />
+    <Compile Include="Mappers\IObjectMappingStrategyFactory.cs" />
     <Compile Include="Mappers\MapperRegistry.cs" />
     <Compile Include="Mappers\NullableMapper.cs" />
     <Compile Include="Mappers\ReferenceMapper.cs" />

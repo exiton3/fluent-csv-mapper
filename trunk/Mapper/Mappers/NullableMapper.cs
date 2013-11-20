@@ -14,13 +14,13 @@ namespace Mapper.Mappers
             return classMapper.Store(getterValue);
         }
 
-        public object Restore(IPropertyMapInfo mapping, object value, IClassMapper classMapper)
+        public object Restore(IPropertyMapInfo propertyMapInfo, object value, IClassMapper classMapper)
         {
             if (value == null)
             {
                 return null;
             }
-            return classMapper.Restore(mapping.PropertyType, value as IObjectStorage);
+            return classMapper.Restore(propertyMapInfo.PropertyType, value as IObjectStorage);
         }
 
         public bool IsMatch(IPropertyMapInfo propertyMapInfo)

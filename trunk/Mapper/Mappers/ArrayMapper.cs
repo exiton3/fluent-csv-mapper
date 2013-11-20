@@ -23,14 +23,14 @@ namespace Mapper.Mappers
             return objectStorages;
         }
 
-        public object Restore(IPropertyMapInfo mapping, object value, IClassMapper classMapper)
+        public object Restore(IPropertyMapInfo propertyMapInfo, object value, IClassMapper classMapper)
         {
             var sourceValues = ((IEnumerable) value?? new IObjectStorage[0]).Cast<IObjectStorage>().ToList();
-            var array = Array.CreateInstance(mapping.PropertyType, sourceValues.Count);
+            var array = Array.CreateInstance(propertyMapInfo.PropertyType, sourceValues.Count);
             int i = 0;
             foreach (var storageItem in sourceValues)
             {
-                var restoredItem = classMapper.Restore(mapping.PropertyType, storageItem);
+                var restoredItem = classMapper.Restore(propertyMapInfo.PropertyType, storageItem);
                 array.SetValue(restoredItem, i);
                 i++;
             }

@@ -17,12 +17,6 @@ namespace Mapper.Mappers
                 foreach (var obj in (IEnumerable)getterValue)
                 {
                     var storage = classMapper.Store(obj);
-                    if (propertyMapInfo.IsDiscriminatorSet)
-                    {
-                        var discriminatorType = propertyMapInfo.DiscriminatorTypes.FirstOrDefault(x => x.Value == obj.GetType());
-                        storage.SetData(propertyMapInfo.DiscriminatorField,
-                                        discriminatorType.Key);
-                    }
                     objectStorages.Add(storage);
                 }
             }
@@ -36,15 +30,7 @@ namespace Mapper.Mappers
             var objectList = (IList)Activator.CreateInstance(genericType);
             foreach (var storageItem in value as IEnumerable)
             {
-                Type typeToRestore = mapping.PropertyType;
-                if (mapping.IsDiscriminatorSet)
-                {
-                    var storage = storageItem as IObjectStorage;
-                    string key = storage.GetData(mapping.DiscriminatorField).ToString();
-                      typeToRestore = mapping.DiscriminatorTypes[key];
-                }
-
-                var restoredItem = classMapper.Restore(typeToRestore, (IObjectStorage)storageItem);
+                var restoredItem = classMapper.Restore(mapping.PropertyType, (IObjectStorage)storageItem);
                 objectList.Add(restoredItem);
             }
             return objectList;
