@@ -1,6 +1,6 @@
 namespace Mapper.Configuration
 {
-    public interface IReferencePropertyMapOptions : IConverterPropertyMapOptions, IInheritanceMapOptions
+    public interface IReferencePropertyMapOptions :  IInheritanceMapOptions, IConverterPropertyMapOptions
     {
     }
 }
