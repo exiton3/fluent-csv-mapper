@@ -2,20 +2,13 @@ using Mapper.Converters;
 
 namespace Mapper.Configuration
 {
-    internal class PropertyMapOptions<T> : IPropertyMapOptions, IReferencePropertyMapOptions,IDescriminateMapOptions
+    internal class PropertyMapOptions<T> : IPropertyMapOptions, IReferencePropertyMapOptions, IDescriminateMapOptions
     {
         private readonly PropertyMapInfo<T> _propertyMapInfo;
 
         public PropertyMapOptions(PropertyMapInfo<T> propertyMapInfo)
         {
             _propertyMapInfo = propertyMapInfo;
-        }
-
-        public IDescriminateMapOptions DiscriminateOnField(string name)
-        {
-            _propertyMapInfo.DiscriminatorField = name;
-
-            return this;
         }
 
         public IDescriminateMapOptions DiscriminatorValueFor<TValue>(string value) where TValue : class
@@ -32,6 +25,13 @@ namespace Mapper.Configuration
         public void UseTypeConverter<TConverter>() where TConverter : ITypeConverter, new()
         {
             _propertyMapInfo.TypeConverter = new TConverter();
+        }
+
+        public IDescriminateMapOptions DiscriminateOnField(string name)
+        {
+            _propertyMapInfo.DiscriminatorField = name;
+
+            return this;
         }
     }
 }
