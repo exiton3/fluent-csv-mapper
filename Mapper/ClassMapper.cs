@@ -63,15 +63,16 @@ namespace Mapper
                 IPropertyMapInfo propertyMapInfo = classMap.GetMapping(data.Key);
                 object value = data.Value;
                 IMapper mapper = _mapperRegistry.GetMapper(propertyMapInfo);
-                object obj = mapper.Restore(propertyMapInfo, value, this.GetClassMapper(propertyMapInfo));
 
                 try
                 {
+                    object obj = mapper.Restore(propertyMapInfo, value, this.GetClassMapper(propertyMapInfo));
+              
                     propertyMapInfo.Setter(restoredObject, obj);
                 }
                 catch (Exception e)
                 {
-                    throw new MapperMappingException(string.Format("Cannot set property {0}", data.Key), e);
+                    throw new MapperMappingException(string.Format("Cannot restore property {0} for type {1}", data.Key,type.Name), e);
                 }
             }
 
