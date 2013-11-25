@@ -26,9 +26,26 @@ namespace Mapper.Mappers
 
         public object Restore(Type type, IObjectStorage storage)
         {
-            string key = storage.GetData(_propertyMapInfo.DiscriminatorField).ToString();
-            var typeToRestore = _propertyMapInfo.DiscriminatorTypes[key];
+            object keyObject = storage.GetData(_propertyMapInfo.DiscriminatorField);
+            string key;
+            if (keyObject == null)
+            {
+                throw new MapperMappingException(string.Format("Discriminator field {0} was not found in storage for type {1} {2}",_propertyMapInfo.DiscriminatorField, type,_propertyMapInfo.Getter.ToString()),_propertyMapInfo.Getter.ToString());
+            }
 
+            key = keyObject.ToString();
+
+            Type typeToRestore;
+            if (_propertyMapInfo.DiscriminatorTypes.TryGetValue(key, out typeToRestore))
+            {
+                typeToRestore = _propertyMapInfo.DiscriminatorTypes[key];
+            }
+            else
+            {
+                throw new MapperMappingException(
+                    string.Format("The discriminator value {0} in type {1} ", key, type.Name),
+                    _propertyMapInfo.Getter.ToString());
+            }
             return _classMapper.Restore(typeToRestore, storage);
         }
 
