@@ -119,7 +119,7 @@ namespace Mapper.Tests
             var person = MakePerson(x => x.Gender = Gender.Female);
 
             var dvt = _classMapper.Store(person);
-
+            Console.WriteLine(dvt.GetData("Gender").GetType().ToString());
             Assert.That(dvt.GetData("Gender"), Is.EqualTo(1));
         }
 
