@@ -17,24 +17,26 @@ namespace Mapper.Mappers
             Type keyType = TypeHelper.GetDictionaryKeyType(propertyMapInfo.PropertyType);
             Type valueType = TypeHelper.GetDictionaryValueType(propertyMapInfo.PropertyType);
 
-            var sourceDictionaryType = KvpType.MakeGenericType(keyType,valueType);
+            var sourceKvpType = KvpType.MakeGenericType(keyType,valueType);
 
             var objectStorages = new Dictionary<string, IObjectStorage>();
-
+            Type dictType = typeof (Dictionary<,>).MakeGenericType(keyType, typeof (IObjectStorage));
+            var dictInstance = Activator.CreateInstance(dictType) as IDictionary;
             if (getterValue != null)
             {
                 var source = getterValue as IEnumerable;
 
                 foreach (object keyValuePair in source)
                 {
-                    var sourceKey = sourceDictionaryType.GetProperty("Key").GetValue(keyValuePair, new object[0]);
-                    var sourceValue = sourceDictionaryType.GetProperty("Value").GetValue(keyValuePair, new object[0]);
+                    var sourceKey = sourceKvpType.GetProperty("Key").GetValue(keyValuePair, new object[0]);
+                    var sourceValue = sourceKvpType.GetProperty("Value").GetValue(keyValuePair, new object[0]);
 
                     var storage = classMapper.Store(sourceValue);
                     objectStorages.Add(sourceKey.ToString(), storage);
+                    dictInstance.Add(sourceKey, storage);
                 }
             }
-            return objectStorages;
+            return dictInstance;
         }
 
         public object Restore(IPropertyMapInfo propertyMapInfo, object value, IClassMapper classMapper)

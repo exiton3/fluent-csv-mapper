@@ -4,7 +4,7 @@ using Mapper.Configuration;
 
 namespace Mapper.Mappers
 {
-    class InheritanceClassMapper : IClassMapper
+   internal sealed class InheritanceClassMapper : IClassMapper
     {
         private readonly IClassMapper _classMapper;
         private readonly IPropertyMapInfo _propertyMapInfo;
