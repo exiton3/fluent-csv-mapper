@@ -119,7 +119,7 @@ namespace Mapper.Tests
             var person = MakePerson(x => x.Gender = Gender.Female);
 
             var dvt = _classMapper.Store(person);
-            Console.WriteLine(dvt.GetData("Gender").GetType().ToString());
+
             Assert.That(dvt.GetData("Gender"), Is.EqualTo(1));
         }
 
@@ -365,6 +365,34 @@ namespace Mapper.Tests
         }
 
         [Test]
+        public void StoreIntKeyDictionaryPropertyWithIneritance()
+        {
+            var department = new Department
+            {
+                PersonsPerGroupInt = new Dictionary<int, Person>
+                        {
+                           {1, MakePerson(x=>x.Name = "First")},
+                           {2, new Manager{Name = "Second",Salary = 234.0, Address = new Address()}}
+                        }
+            };
+
+            var objectStorage = _classMapper.Store(department);
+
+            var data = objectStorage.GetData("PersonsPerGroupInt");
+
+            Assert.That(data, Is.InstanceOf<Dictionary<int, IObjectStorage>>());
+            var dict = (Dictionary<int, IObjectStorage>)data;
+
+            var first = dict[1];
+            var second = dict[2];
+
+            Assert.That(first.GetData("Name"), Is.EqualTo("First"));
+            Assert.That(second.GetData("Name"), Is.EqualTo("Second"));
+            Assert.That(second.GetData("Salary"), Is.EqualTo(234.0));
+        }
+
+
+        [Test]
         public void RestoreDictionaryProperty()
         {
             var storage1 = new ObjectStorage();
@@ -388,6 +416,40 @@ namespace Mapper.Tests
             var department = (Department) restored;
 
             Assert.That(department.PersonsPerGroup.Count, Is.EqualTo(2));
+
+        }
+
+
+        [Test]
+        public void RestoreIntKeyDictionaryPropertyWithInheritance()
+        {
+            var storage1 = new ObjectStorage();
+            storage1["Name"] = "First";
+            storage1["Type"] = "Person";
+
+            var storage2 = new ObjectStorage();
+            storage2["Name"] = "Second";
+            storage2["Type"] = "Manager";
+            storage2["Salary"] = 123.5;
+
+            var storage = new ObjectStorage();
+
+            var dict = new Dictionary<int, ObjectStorage>
+                {
+                    {1, storage1},
+                    {2, storage2}
+                };
+
+            storage["PersonsPerGroupInt"] = dict;
+
+            var restored = _classMapper.Restore(typeof(Department), storage);
+
+            Assert.That(restored, Is.Not.Null);
+            var department = (Department)restored;
+
+            Assert.That(department.PersonsPerGroupInt.Count, Is.EqualTo(2));
+            Assert.That(department.PersonsPerGroupInt[1],Is.InstanceOf<Person>());
+            Assert.That(department.PersonsPerGroupInt[2],Is.InstanceOf<Manager>());
 
         }
 

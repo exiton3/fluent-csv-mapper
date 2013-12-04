@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Mapper.Tests.ConcreteClasses
@@ -14,5 +15,7 @@ namespace Mapper.Tests.ConcreteClasses
         public List<Person> Persons { get; set; } 
         public Person[] Persons2 { get; set; }
         public Dictionary<string,Person> PersonsPerGroup { get; set; }
+
+        public Dictionary<int,Person> PersonsPerGroupInt { get; set; }
     }
 }

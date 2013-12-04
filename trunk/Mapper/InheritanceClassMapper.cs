@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Mapper.Configuration;
 
-namespace Mapper.Mappers
+namespace Mapper
 {
    internal sealed class InheritanceClassMapper : IClassMapper
     {

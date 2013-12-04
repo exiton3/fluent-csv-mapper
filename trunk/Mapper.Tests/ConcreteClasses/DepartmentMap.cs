@@ -12,6 +12,10 @@ namespace Mapper.Tests.ConcreteClasses
                .DiscriminatorValueFor<Manager>("Manager");
             MapAsCollection(x => x.Persons2, "PersonsArray");
             MapAsDictionary(x => x.PersonsPerGroup, "PersonsPerGroup");
+            MapAsDictionary(x => x.PersonsPerGroupInt, "PersonsPerGroupInt")
+               .DiscriminateOnField("Type")
+               .DiscriminatorValueFor<Person>("Person")
+               .DiscriminatorValueFor<Manager>("Manager");
         } 
     }
 }
