@@ -79,11 +79,13 @@ namespace Mapper.Configuration
             return _propertyMapOptions;
         }
 
-        protected void MapAsDictionary<TValue>(Expression<Func<T, TValue>> getterExpression, string name) where TValue: IDictionary
+        protected IInheritanceMapOptions MapAsDictionary<TValue>(Expression<Func<T, TValue>> getterExpression, string name) where TValue : IDictionary
         {
             var propInfo = CreatePropertyMapInfo(getterExpression, PropertyKind.Dictionary);
             propInfo.PropertyType = typeof(TValue);
+            _propertyMapOptions = new PropertyMapOptions<T>(propInfo);
             _mappings.Add(name, propInfo);
+            return _propertyMapOptions;
         }
 
         private static PropertyKind GetPropertyKind(Type collectionType)
