@@ -167,6 +167,7 @@ namespace Mapper.Tests
             var dvt = _classMapper.Store(person);
 
             var storage = dvt.GetData("Address") as IObjectStorage;
+            Console.WriteLine(dvt);
             Assert.That(storage, Is.Not.Null);
             Assert.That(storage.GetData("Street"), Is.EqualTo("some"));
             Assert.That(storage.GetData("House"), Is.EqualTo(123));
@@ -497,7 +498,7 @@ namespace Mapper.Tests
             var storage = new ObjectStorage();
 
             storage["Persons"] = new List<IObjectStorage> {person, manager};
-
+            Console.WriteLine(storage);
             Department restored = _classMapper.Restore(typeof (Department), storage) as Department;
 
             Assert.That(restored.Persons[0],Is.InstanceOf<Person>());
@@ -516,7 +517,7 @@ namespace Mapper.Tests
             IObjectStorage objectStorage = _classMapper.Store(department);
 
             var persons = objectStorage.GetData("Persons") as List<IObjectStorage>;
-
+            Console.WriteLine(objectStorage);
             Assert.That(persons.Count, Is.EqualTo(2));
             Assert.That(persons[0].GetData("Type"),Is.EqualTo("Person"));
             Assert.That(persons[1].GetData("Type"),Is.EqualTo("Manager"));

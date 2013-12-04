@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace Mapper.Tests.ConcreteClasses
 {
@@ -41,6 +42,34 @@ namespace Mapper.Tests.ConcreteClasses
             object value;
             _data.TryGetValue(key, out value);
             return value;
+        }
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            
+            foreach (var keyValuePair in Data)
+            {
+
+                if (keyValuePair.Value is IList)
+                {
+                    stringBuilder.AppendFormat("[ {0}, ", keyValuePair.Key);
+                    var collection = (IList) keyValuePair.Value;
+
+                    foreach (var item in collection)
+                    {
+                        stringBuilder.Append(item);
+                    }
+                    stringBuilder.AppendLine(" ]");
+                }
+                else
+                {
+                    stringBuilder
+                                 .AppendFormat("[ {0}, {{{1}}}", keyValuePair.Key, keyValuePair.Value)
+                                 .AppendLine(" ]");
+                }
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

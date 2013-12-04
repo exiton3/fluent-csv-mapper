@@ -16,7 +16,9 @@ namespace Mapper.Converters
         {
             if (!Enum.IsDefined(typeof (TEnum), source))
             {
-                throw new ArgumentOutOfRangeException("source");
+                throw new InvalidOperationException(
+                    String.Format("Can not convert int value {0} to Enum {1}. The value not defined in enum", source,
+                                  typeof (TEnum)));
             }
             return (TEnum) Enum.ToObject(typeof (TEnum), source);
         }
