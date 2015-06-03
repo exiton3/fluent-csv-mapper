@@ -1,0 +1,1 @@
+Fluent mapper, it is a framework for persisting and restoring data
